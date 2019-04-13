@@ -112,7 +112,7 @@ export default {
                   alias aspernatur. Obcaecati officiis, cum numquam quos beatae
                   natus vero, distinctio dolore aliquid perspiciatis, libero
                   veritatis cumque nisi dolorem dolores incidunt?`,
-          image: '/helping.jpg'
+          image: '/images/questions.png'
         },
         {
           title: 'Introduces paper-less survey',
@@ -120,7 +120,7 @@ export default {
                   alias aspernatur. Obcaecati officiis, cum numquam quos beatae
                   natus vero, distinctio dolore aliquid perspiciatis, libero
                   veritatis cumque nisi dolorem dolores incidunt?`,
-          image: '/helping.jpg'
+          image: '/images/paper-less.jpg'
         },
         {
           title: 'Survey on the cloud',
@@ -128,7 +128,7 @@ export default {
                   alias aspernatur. Obcaecati officiis, cum numquam quos beatae
                   natus vero, distinctio dolore aliquid perspiciatis, libero
                   veritatis cumque nisi dolorem dolores incidunt?`,
-          image: '/helping.jpg'
+          image: '/images/clouds.png'
         }
       ]
     }
