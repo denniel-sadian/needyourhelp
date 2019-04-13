@@ -10,7 +10,38 @@
         <v-btn round flat>About</v-btn>
         <v-btn round flat>Login</v-btn>
       </v-toolbar-items>
+      <v-toolbar-side-icon
+        class="hidden-md-and-up"
+        @click="showNav = !showNav"
+      ></v-toolbar-side-icon>
     </v-toolbar>
+
+    <v-navigation-drawer v-model="showNav" absolute temporary right>
+      <v-list class="pt-0" dense>
+        <v-list-tile>
+          <v-list-tile-title class="title">
+            Application Drawer
+          </v-list-tile-title></v-list-tile
+        >
+
+        <v-divider light></v-divider>
+
+        <v-list-tile
+          v-for="item in items"
+          :key="item.title"
+          @click="showNav = false"
+        >
+          <v-list-tile-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-tile-action>
+
+          <v-list-tile-content>
+            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
+
     <v-container id="header" fluid pt-5>
       <v-layout
         row
@@ -90,7 +121,7 @@
             <v-img :src="desc.image" aspect-ratio="2"></v-img>
             <v-card-title primary-title>
               <div>
-                <h3 class="headline mb-1">{{ desc.title }}</h3>
+                <h3 class="headline mb-1 text-xs-center">{{ desc.title }}</h3>
                 <div>{{ desc.content }}</div>
               </div>
             </v-card-title>
@@ -105,29 +136,36 @@
 export default {
   data() {
     return {
+      showNav: false,
+      items: [
+        { icon: 'radio_button_checked', title: 'Login' },
+        { icon: 'list', title: 'Topics' },
+        { icon: 'info', title: 'About' }
+      ],
       descs: [
         {
           title: 'What is this website?',
-          content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas,
-                  alias aspernatur. Obcaecati officiis, cum numquam quos beatae
-                  natus vero, distinctio dolore aliquid perspiciatis, libero
-                  veritatis cumque nisi dolorem dolores incidunt?`,
+          content: `This website is an online platform where electronic surveys
+          take place. Just sign-up, create topics, share your topics' links to
+          your respondents, and let them interact with the questions that you can
+          dynamically create. `,
           image: '/images/questions.png'
         },
         {
           title: 'Introduces paper-less survey',
-          content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas,
-                  alias aspernatur. Obcaecati officiis, cum numquam quos beatae
-                  natus vero, distinctio dolore aliquid perspiciatis, libero
-                  veritatis cumque nisi dolorem dolores incidunt?`,
+          content: `Since this is a "website", you don't have to print a lot of
+          questionaires that you give to your respondents. Most of the people
+          nowadays have their own mobile phones, they can answer the survey there.
+          This also promotes a green concept, let us save the trees!`,
           image: '/images/paper-less.jpg'
         },
         {
           title: 'Survey on the cloud',
-          content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas,
-                  alias aspernatur. Obcaecati officiis, cum numquam quos beatae
-                  natus vero, distinctio dolore aliquid perspiciatis, libero
-                  veritatis cumque nisi dolorem dolores incidunt?`,
+          content: `The results of your topics' surveys will be stored on the cloud,
+          this website keeps it there for you. The results, as well, is taken
+          care for you. Do you have those multiple choice questions? You count
+          the votes manually which is a bit frustrating. This website takes care
+          of that for you, too!`,
           image: '/images/clouds.png'
         }
       ]
