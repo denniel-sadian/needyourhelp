@@ -1,72 +1,150 @@
 <template>
-  <v-layout column justify-center align-center>
-    <v-flex xs12 sm8 md6>
-      <div class="text-xs-center">
-        <logo/>
-        <vuetify-logo/>
-      </div>
-      <v-card>
-        <v-card-title class="headline">Welcome to the Vuetify + Nuxt.js template</v-card-title>
-        <v-card-text>
-          <p>
-            Vuetify is a progressive Material Design component framework for
-            Vue.js. It was designed to empower developers to create amazing
-            applications.
-          </p>
-          <p>
-            For more information on Vuetify, check out the
-            <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-            >documentation</a>.
-          </p>
-          <p>
-            If you have questions, please join the official
-            <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              title="chat"
-            >discord</a>.
-          </p>
-          <p>
-            Find a bug? Report it on the github
-            <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              title="contribute"
-            >issue board</a>.
-          </p>
-          <p>
-            Thank you for developing with Vuetify and I look forward to bringing
-            more exciting features in the future.
-          </p>
-          <div class="text-xs-right">
-            <em>
-              <small>&mdash; John Leider</small>
-            </em>
-          </div>
-          <hr class="my-3">
-          <a href="https://nuxtjs.org/" target="_blank">Nuxt Documentation</a>
-          <br>
-          <a href="https://github.com/nuxt/nuxt.js" target="_blank">Nuxt GitHub</a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer/>
-          <v-btn color="primary" flat nuxt to="/inspire">Continue</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
-  </v-layout>
+  <v-app dark>
+    <v-toolbar id="nav" app flat>
+      <v-toolbar-title
+        ><v-icon>favorite</v-icon> Need Your Help</v-toolbar-title
+      >
+      <v-spacer></v-spacer>
+      <v-toolbar-items class="hidden-sm-and-down">
+        <v-btn round flat>Topics</v-btn>
+        <v-btn round flat>About</v-btn>
+        <v-btn round flat>Login</v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
+    <v-container id="header" fluid pt-5>
+      <v-layout
+        row
+        align-center
+        justify-center
+        wrap
+        hidden-xs-only
+        hidden-sm-only
+      >
+        <v-flex md4 pr-5>
+          <img
+            id="logo"
+            src="~/assets/images/logo.png"
+            width="250"
+            height="auto"
+            style="float: right; border: 5px solid white; border-radius: 100%"
+          />
+        </v-flex>
+        <v-flex md6>
+          <h1 class="display-4 font-weight-black">
+            Need
+            <span class="font-italic">Your</span> Help
+          </h1>
+        </v-flex>
+        <v-flex md12 text-xs-center mt-5>
+          <v-btn large round class="purple">Get Started</v-btn>
+        </v-flex>
+      </v-layout>
+      <v-layout
+        row
+        align-center
+        justify-center
+        wrap
+        hidden-xs-only
+        hidden-md-and-up
+      >
+        <v-flex sm5 pr-4>
+          <img
+            id="logo"
+            src="~/assets/images/logo.png"
+            width="180"
+            height="auto"
+            style="float: right; border: 5px solid white; border-radius: 100%"
+          />
+        </v-flex>
+        <v-flex sm7>
+          <h1 class="display-3 font-weight-black">
+            Need
+            <span class="font-italic">Your</span> Help
+          </h1>
+        </v-flex>
+        <v-flex sm12 text-xs-center mt-5>
+          <v-btn large round class="purple">Get Started</v-btn>
+        </v-flex>
+      </v-layout>
+      <v-layout column text-xs-center wrap hidden-sm-and-up>
+        <v-flex>
+          <img
+            src="~/assets/images/logo.png"
+            width="180"
+            height="auto"
+            style="border: 5px solid white; border-radius: 100%"
+          />
+        </v-flex>
+        <v-flex>
+          <h1 class="display-3 font-weight-black">Need Your Help</h1>
+        </v-flex>
+        <v-flex text-xs-center mt-3>
+          <v-btn large round class="purple">Get Started</v-btn>
+        </v-flex>
+      </v-layout>
+    </v-container>
+    <v-container mt-4>
+      <v-layout row wrap>
+        <v-flex v-for="desc in descs" :key="desc.title" md4 pa-2>
+          <v-card>
+            <v-img :src="desc.image" aspect-ratio="2"></v-img>
+            <v-card-title primary-title>
+              <div>
+                <h3 class="headline mb-1">{{ desc.title }}</h3>
+                <div>{{ desc.content }}</div>
+              </div>
+            </v-card-title>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-app>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
-
 export default {
-  components: {
-    Logo,
-    VuetifyLogo
+  data() {
+    return {
+      descs: [
+        {
+          title: 'What is this website?',
+          content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas,
+                  alias aspernatur. Obcaecati officiis, cum numquam quos beatae
+                  natus vero, distinctio dolore aliquid perspiciatis, libero
+                  veritatis cumque nisi dolorem dolores incidunt?`,
+          image: '/helping.jpg'
+        },
+        {
+          title: 'Introduces paper-less survey',
+          content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas,
+                  alias aspernatur. Obcaecati officiis, cum numquam quos beatae
+                  natus vero, distinctio dolore aliquid perspiciatis, libero
+                  veritatis cumque nisi dolorem dolores incidunt?`,
+          image: '/helping.jpg'
+        },
+        {
+          title: 'Survey on the cloud',
+          content: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas,
+                  alias aspernatur. Obcaecati officiis, cum numquam quos beatae
+                  natus vero, distinctio dolore aliquid perspiciatis, libero
+                  veritatis cumque nisi dolorem dolores incidunt?`,
+          image: '/helping.jpg'
+        }
+      ]
+    }
   }
 }
 </script>
+
+<style scoped>
+#header,
+#nav {
+  background: url('../assets/images/header.jpg') !important;
+  background-attachment: fixed !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+#header {
+  margin-top: 40px;
+}
+</style>
