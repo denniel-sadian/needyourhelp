@@ -2,13 +2,7 @@
   <v-app dark>
     <v-toolbar>
       <v-toolbar-side-icon></v-toolbar-side-icon>
-      <v-img
-        src="/logo.png"
-        width="45"
-        height="45"
-        max-height="45"
-        max-width="45"
-      ></v-img>
+
       <v-toolbar-title>Need Your Help</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">

@@ -1,47 +1,5 @@
 <template>
-  <v-app dark>
-    <v-toolbar id="nav" app flat>
-      <v-toolbar-title
-        ><v-icon>favorite</v-icon> Need Your Help</v-toolbar-title
-      >
-      <v-spacer></v-spacer>
-      <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn round flat>Topics</v-btn>
-        <v-btn round flat>About</v-btn>
-        <v-btn round flat>Login</v-btn>
-      </v-toolbar-items>
-      <v-toolbar-side-icon
-        class="hidden-md-and-up"
-        @click="showNav = !showNav"
-      ></v-toolbar-side-icon>
-    </v-toolbar>
-
-    <v-navigation-drawer v-model="showNav" absolute temporary right>
-      <v-list class="pt-0" dense>
-        <v-list-tile>
-          <v-list-tile-title class="title">
-            Application Drawer
-          </v-list-tile-title></v-list-tile
-        >
-
-        <v-divider light></v-divider>
-
-        <v-list-tile
-          v-for="item in items"
-          :key="item.title"
-          @click="showNav = false"
-        >
-          <v-list-tile-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-tile-action>
-
-          <v-list-tile-content>
-            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
-
+  <div>
     <v-container id="header" fluid pt-5>
       <v-layout
         row
@@ -114,34 +72,105 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <v-container mt-4>
-      <v-layout row wrap>
-        <v-flex v-for="desc in descs" :key="desc.title" md4 pa-2>
-          <v-card>
+
+    <v-container mt-4 text-xs-center>
+      <v-layout justify-center row wrap mb-5>
+        <v-flex v-for="desc in descs" :key="desc.title" d-flex item sm4 pa-2>
+          <v-card class="round">
             <v-img :src="desc.image" aspect-ratio="2"></v-img>
             <v-card-title primary-title>
               <div>
-                <h3 class="headline mb-1 text-xs-center">{{ desc.title }}</h3>
+                <h3 class="headline mb-1">{{ desc.title }}</h3>
                 <div>{{ desc.content }}</div>
               </div>
             </v-card-title>
           </v-card>
         </v-flex>
       </v-layout>
+      <v-divider />
     </v-container>
-  </v-app>
+
+    <v-container grid-list-sm mb-5>
+      <v-layout row wrap>
+        <v-flex d-flex xs12 text-xs-center>
+          <h1 class="display-3">How to use?</h1>
+        </v-flex>
+        <v-flex d-flex xs12>
+          <v-layout row wrap>
+            <v-flex d-flex sm4 xs12>
+              <v-card>
+                <v-card-text class="display-4 text-xs-center"
+                  >1<sup>st</sup></v-card-text
+                >
+              </v-card>
+            </v-flex>
+            <v-flex d-flex sm8 xs12>
+              <v-card>
+                <v-card-text class="headline">
+                  If you have a topic that you wish to conduct a survey with,
+                  then you must first create an account. With that, your
+                  respondents will be able to know who is the owner of the
+                  topic.
+                </v-card-text>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+        <v-flex d-flex xs12 mt-4>
+          <v-layout row wrap>
+            <v-flex d-flex sm8 xs12 order-xs2 order-sm1>
+              <v-card>
+                <v-card-text class="headline">
+                  You begin creating your topics. Also This website allows you
+                  to dynamically create question sheets that contain the
+                  questions that your topics need. It provides you two types of
+                  questions: a text-answered question and a multiple choice
+                  question.
+                </v-card-text>
+              </v-card>
+            </v-flex>
+            <v-flex d-flex sm4 xs12 order-xs1 order-sm2>
+              <v-card>
+                <v-card-text class="display-4 text-xs-center"
+                  >2<sup>nd</sup></v-card-text
+                >
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+        <v-flex d-flex xs12 mt-4>
+          <v-layout row wrap>
+            <v-flex d-flex sm4 xs12>
+              <v-card>
+                <v-card-text class="display-4 text-xs-center"
+                  >3<sup>rd</sup></v-card-text
+                >
+              </v-card>
+            </v-flex>
+            <v-flex d-flex sm8 xs12>
+              <v-card>
+                <v-card-text class="headline">
+                  You share the link of your topics to anyone - your
+                  respondents. You can post the link as well to any social media
+                  platform to boost the coverage of the survey. You can always
+                  take a peek of the automatically calculated results of your
+                  topics.
+                </v-card-text>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
-      showNav: false,
-      items: [
-        { icon: 'radio_button_checked', title: 'Login' },
-        { icon: 'list', title: 'Topics' },
-        { icon: 'info', title: 'About' }
-      ],
       descs: [
         {
           title: 'What is this website?',
@@ -170,6 +199,19 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    login(username, password) {
+      axios
+        .post('http://127.0.0.1:8000/token/', {
+          username: username,
+          password: password
+        })
+
+        .then(res => {
+          this.$store.commit('SET_TOKEN', res.data)
+        })
+    }
   }
 }
 </script>
@@ -182,7 +224,7 @@ export default {
   background-size: cover !important;
   background-position: center !important;
 }
-#header {
-  margin-top: 40px;
+.round {
+  border-radius: 10px;
 }
 </style>
