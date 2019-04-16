@@ -9,7 +9,7 @@
         </div>
       </v-flex>
       <v-flex xs12 mt-5>
-        <div class="purple">{{ year }}</div>
+        <div class="purple">&copy; {{ year }}</div>
       </v-flex>
     </v-layout>
   </v-footer>

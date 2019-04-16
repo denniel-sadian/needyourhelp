@@ -57,7 +57,7 @@
       multi-line
       class="subheading"
     >
-      Oh, that's nice! You have logged in successfully!
+      Welcome to Need Your Help, {{ userFullName }}!
       <v-btn fab flat @click="loginCorrect = false">
         <v-icon>check_circle</v-icon>
       </v-btn>
@@ -82,6 +82,15 @@ export default {
       password: '',
       loginError: false,
       loginCorrect: false
+    }
+  },
+  computed: {
+    userFullName() {
+      if (this.$store.getters.auth.username) {
+        return `${this.$store.getters.auth.first_name} ${
+          this.$store.getters.auth.last_name
+        }`
+      } else return false
     }
   },
   methods: {

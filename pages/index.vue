@@ -179,7 +179,7 @@
       You're not yet logged in. You can register if you don't have your account
       yet.
       <v-btn fab flat @click="getSartedSnack = false">
-        <v-icon>check_circle</v-icon>
+        <v-icon>cancel</v-icon>
       </v-btn>
     </v-snackbar>
   </div>
@@ -221,7 +221,7 @@ export default {
   },
   methods: {
     getStarted() {
-      if (this.$store.getters.token.refresh) {
+      if (this.$store.getters.auth.username) {
         this.$router.push('topics')
       } else {
         this.getSartedSnack = true

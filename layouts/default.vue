@@ -46,15 +46,28 @@
     </v-toolbar>
 
     <v-navigation-drawer v-model="showNav" app absolute temporary right>
-      <v-list class="pt-0" dense>
-        <v-list-tile>
-          <v-list-tile-title class="title">
-            Application Drawer
-          </v-list-tile-title></v-list-tile
-        >
-
+      <v-toolbar flat class="transparent">
+        <v-list class="pa-0">
+          <v-list-tile avatar>
+            <v-list-tile-avatar v-show="userFullName">
+              <img
+                src="/images/avatar.png"
+                style="border: 2px solid white; border-radius: 100%"
+              />
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title v-if="userFullName" class="title">{{
+                userFullName
+              }}</v-list-tile-title>
+              <v-list-tile-title v-else class="title"
+                >Application Drawer</v-list-tile-title
+              >
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-toolbar>
+      <v-list dense>
         <v-divider light></v-divider>
-
         <v-list-tile @click="$router.push('topics')">
           <v-list-tile-action>
             <v-icon>view_list</v-icon>
@@ -63,15 +76,30 @@
             <v-list-tile-title>Topics</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="$router.push('topics')">
+        <v-list-tile @click="$router.push('about')">
           <v-list-tile-action>
             <v-icon>info</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>Topics</v-list-tile-title>
+            <v-list-tile-title>About</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-list-tile
+          v-show="userFullName"
+          @click="
+            logout()
+            showNav = !showNav
+          "
+        >
+          <v-list-tile-action>
+            <v-icon>exit_to_app</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Logout</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile
+          v-show="!userFullName"
           @click="
             showLogin = !showLogin
             showNav = !showNav
@@ -85,6 +113,7 @@
           </v-list-tile-content>
         </v-list-tile>
         <v-list-tile
+          v-show="!userFullName"
           @click="
             showRegister = !showRegister
             showNav = !showNav

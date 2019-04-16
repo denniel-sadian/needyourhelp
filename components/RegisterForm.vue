@@ -124,6 +124,19 @@
         <v-icon>cancel</v-icon>
       </v-btn>
     </v-snackbar>
+    <v-snackbar
+      v-model="loginCorrect"
+      :timeout="5000"
+      color="green"
+      top
+      multi-line
+      class="subheading"
+    >
+      Welcome to Need Your Help, {{ userFullName }}!
+      <v-btn fab flat @click="loginCorrect = false">
+        <v-icon>check_circle</v-icon>
+      </v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -149,7 +162,17 @@ export default {
       passwordNotMatch: false,
       notComplete: false,
       usernameInvalid: false,
-      error: false
+      error: false,
+      loginCorrect: false
+    }
+  },
+  computed: {
+    userFullName() {
+      if (this.$store.getters.auth.username) {
+        return `${this.$store.getters.auth.first_name} ${
+          this.$store.getters.auth.last_name
+        }`
+      } else return false
     }
   },
   methods: {
@@ -184,6 +207,7 @@ export default {
                   .then(async res => {
                     localStorage.setItem('needyourhelp_access', res.data.access)
                     await getAuth(this.$store)
+                    this.loginCorrect = true
                     this.$emit('register-close')
                   })
                   .catch(() => {
