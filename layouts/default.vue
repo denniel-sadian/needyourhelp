@@ -1,5 +1,5 @@
 <template>
-  <v-app dark>
+  <v-app dark app>
     <v-toolbar id="nav" app flat>
       <v-img
         v-show="$route.name != 'index'"
@@ -17,9 +17,27 @@
       >
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn round to="topics" flat>Topics</v-btn>
-        <v-btn round to="about" flat>About</v-btn>
-        <v-btn round flat>Login</v-btn>
+        <v-btn to="topics" flat>Topics</v-btn>
+        <v-btn to="about" flat>About</v-btn>
+        <v-btn v-show="!userFullName" flat @click="showLogin = !showLogin"
+          >Login</v-btn
+        >
+        <v-btn v-show="!userFullName" flat @click="showRegister = !showRegister"
+          >Register</v-btn
+        >
+        <v-menu v-show="userFullName" offset-y>
+          <v-btn slot="activator" flat class="title yellow--text">{{
+            userFullName
+          }}</v-btn>
+          <v-list>
+            <v-list-tile @click="logout()">
+              <v-list-tile-action>
+                <v-icon>exit_to_app</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-title>Logout</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
       </v-toolbar-items>
       <v-toolbar-side-icon
         class="hidden-md-and-up"
@@ -53,7 +71,12 @@
             <v-list-tile-title>Topics</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile>
+        <v-list-tile
+          @click="
+            showLogin = !showLogin
+            showNav = !showNav
+          "
+        >
           <v-list-tile-action>
             <v-icon>radio_button_checked</v-icon>
           </v-list-tile-action>
@@ -61,25 +84,85 @@
             <v-list-tile-title>Login</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <v-list-tile
+          @click="
+            showRegister = !showRegister
+            showNav = !showNav
+          "
+        >
+          <v-list-tile-action>
+            <v-icon>account_box</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Register</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
       </v-list>
     </v-navigation-drawer>
     <v-content>
       <nuxt />
     </v-content>
+    <LoginForm :show-login="showLogin" @login-close="showLogin = false" />
+    <RegisterForm
+      :show-register="showRegister"
+      @register-close="showRegister = false"
+    />
     <Footer />
+    <v-snackbar
+      v-model="expired"
+      :timeout="5000"
+      color="orange"
+      top
+      multi-line
+      class="subheading"
+    >
+      Oh, that's unfortunate. Your session has expired. Please login again.
+      <v-btn fab flat @click="expired = false">
+        <v-icon>check_circle</v-icon>
+      </v-btn>
+    </v-snackbar>
   </v-app>
 </template>
 
 <script>
+import getAuth from '~/utils/getAuth.js'
+
 import Footer from '~/components/Footer.vue'
+import LoginForm from '~/components/LoginForm.vue'
+import RegisterForm from '~/components/RegisterForm.vue'
 
 export default {
   components: {
-    Footer
+    Footer,
+    LoginForm,
+    RegisterForm
   },
   data() {
     return {
-      showNav: false
+      showNav: false,
+      showLogin: false,
+      showRegister: false,
+      expired: false
+    }
+  },
+  computed: {
+    userFullName() {
+      if (this.$store.getters.auth.username) {
+        return `${this.$store.getters.auth.first_name} ${
+          this.$store.getters.auth.last_name
+        }`
+      } else return false
+    }
+  },
+  async mounted() {
+    this.expired = (await getAuth(this.$store)) === false
+  },
+  methods: {
+    logout() {
+      this.$store.commit('SET_TOKEN', '')
+      this.$store.commit('SET_AUTH', {})
+      localStorage.removeItem('needyourhelp_access')
+      this.$router.push('/')
     }
   }
 }

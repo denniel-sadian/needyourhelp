@@ -25,7 +25,9 @@
           </h1>
         </v-flex>
         <v-flex md12 text-xs-center mt-5>
-          <v-btn large round class="purple">Get Started</v-btn>
+          <v-btn large round class="purple" @click="getStarted()"
+            >Get Started</v-btn
+          >
         </v-flex>
       </v-layout>
       <v-layout
@@ -52,7 +54,9 @@
           </h1>
         </v-flex>
         <v-flex sm12 text-xs-center mt-5>
-          <v-btn large round class="purple">Get Started</v-btn>
+          <v-btn large round class="purple" @click="getStarted()"
+            >Get Started</v-btn
+          >
         </v-flex>
       </v-layout>
       <v-layout column text-xs-center wrap hidden-sm-and-up>
@@ -68,7 +72,9 @@
           <h1 class="display-3 font-weight-black">Need Your Help</h1>
         </v-flex>
         <v-flex text-xs-center mt-3>
-          <v-btn large round class="purple">Get Started</v-btn>
+          <v-btn large round class="purple" @click="getStarted()"
+            >Get Started</v-btn
+          >
         </v-flex>
       </v-layout>
     </v-container>
@@ -162,15 +168,28 @@
         </v-flex>
       </v-layout>
     </v-container>
+    <v-snackbar
+      v-model="getSartedSnack"
+      :timeout="5000"
+      color="blue"
+      top
+      multi-line
+      class="subheading"
+    >
+      You're not yet logged in. You can register if you don't have your account
+      yet.
+      <v-btn fab flat @click="getSartedSnack = false">
+        <v-icon>check_circle</v-icon>
+      </v-btn>
+    </v-snackbar>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   data() {
     return {
+      getSartedSnack: false,
       descs: [
         {
           title: 'What is this website?',
@@ -201,16 +220,12 @@ export default {
     }
   },
   methods: {
-    login(username, password) {
-      axios
-        .post('http://127.0.0.1:8000/token/', {
-          username: username,
-          password: password
-        })
-
-        .then(res => {
-          this.$store.commit('SET_TOKEN', res.data)
-        })
+    getStarted() {
+      if (this.$store.getters.token.refresh) {
+        this.$router.push('topics')
+      } else {
+        this.getSartedSnack = true
+      }
     }
   }
 }

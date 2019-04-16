@@ -3,7 +3,7 @@ import axios from 'axios'
 export const state = () => ({
   topics: [],
   auth: {},
-  token: {}
+  token: ''
 })
 
 export const mutations = {
@@ -20,7 +20,6 @@ export const mutations = {
 
 export const actions = {
   async nuxtServerInit({ commit, dispatch }) {
-    dispatch('user')
     await axios.get('http://127.0.0.1:8000/topics/').then(res => {
       commit('SET_TOPICS', res.data)
     })
@@ -33,9 +32,6 @@ export const actions = {
 }
 
 export const getters = {
-  user: state => {
-    return state.user
-  },
   token: state => {
     return state.token
   },

@@ -1,5 +1,5 @@
 <template>
-  <v-footer id="footer" app absolute height="auto" mt-5>
+  <v-footer id="footer" height="auto" mt-5>
     <v-layout row wrap text-xs-center>
       <v-flex xs12 pt-4>
         <div class="title">{{ day }} quote</div>
