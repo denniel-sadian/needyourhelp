@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 export default async store => {
+  let error = false
   if (localStorage.getItem('needyourhelp_access') !== null) {
     store.commit('SET_TOKEN', localStorage.getItem('needyourhelp_access'))
     const client = axios.create({
@@ -16,7 +17,8 @@ export default async store => {
       })
       .catch(() => {
         store.commit('SET_AUTH', {})
-        return false
+        error = true
       })
   }
+  if (error) return false
 }

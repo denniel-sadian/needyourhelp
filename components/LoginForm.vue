@@ -94,16 +94,16 @@ export default {
     }
   },
   methods: {
-    async loginUser() {
-      await axios
+    loginUser() {
+      axios
         .post('http://127.0.0.1:8000/token/', {
           username: this.username,
           password: this.password
         })
-        .then(async res => {
+        .then(res => {
           localStorage.setItem('needyourhelp_access', res.data.access)
           this.loginCorrect = true
-          await getAuth(this.$store)
+          getAuth(this.$store)
           this.username = ''
           this.password = ''
           this.$emit('login-close')

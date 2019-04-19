@@ -19,14 +19,12 @@ export const mutations = {
 }
 
 export const actions = {
-  async nuxtServerInit({ commit, dispatch }) {
+  async nuxtServerInit({ dispatch }) {
+    await dispatch('getTopics')
+  },
+  async getTopics({ commit }) {
     await axios.get('http://127.0.0.1:8000/topics/').then(res => {
       commit('SET_TOPICS', res.data)
-    })
-  },
-  async user({ commit }) {
-    await axios.get('http://127.0.0.1:8000/auth/me/').then(res => {
-      commit('SET_AUTH', res.data)
     })
   }
 }

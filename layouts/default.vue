@@ -9,21 +9,23 @@
         max-height="42"
         max-width="42"
         style="border: 2px solid white; border-radius: 100%"
-        @click="$router.push('/')"
+        @click="$router.push({ name: 'index' })"
       ></v-img>
-      <v-toolbar-title style="margin-left: 10px" @click="$router.push('/')"
+      <v-toolbar-title
+        style="margin-left: 10px"
+        @click="$router.push({ name: 'index' })"
         ><v-icon v-show="$route.name == 'index'">favorite</v-icon> Need Your
         Help</v-toolbar-title
       >
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn to="topics" flat>Topics</v-btn>
-        <v-btn to="about" flat>About</v-btn>
+        <v-btn to="/topics" flat><v-icon>view_list</v-icon> Topics</v-btn>
+        <v-btn to="/about" flat><v-icon>info</v-icon> About</v-btn>
         <v-btn v-show="!userFullName" flat @click="showLogin = !showLogin"
-          >Login</v-btn
+          ><v-icon>radio_button_checked</v-icon> Login</v-btn
         >
         <v-btn v-show="!userFullName" flat @click="showRegister = !showRegister"
-          >Register</v-btn
+          ><v-icon>account_box</v-icon> Register</v-btn
         >
         <v-menu v-show="userFullName" offset-y>
           <v-btn slot="activator" flat class="title yellow--text">{{
@@ -68,7 +70,7 @@
       </v-toolbar>
       <v-list dense>
         <v-divider light></v-divider>
-        <v-list-tile @click="$router.push('topics')">
+        <v-list-tile @click="$router.push({ name: 'topics' })">
           <v-list-tile-action>
             <v-icon>view_list</v-icon>
           </v-list-tile-action>
@@ -76,7 +78,7 @@
             <v-list-tile-title>Topics</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="$router.push('about')">
+        <v-list-tile @click="$router.push({ name: 'about' })">
           <v-list-tile-action>
             <v-icon>info</v-icon>
           </v-list-tile-action>
@@ -161,6 +163,7 @@ import LoginForm from '~/components/LoginForm.vue'
 import RegisterForm from '~/components/RegisterForm.vue'
 
 export default {
+  middleware: 'getTopics',
   components: {
     Footer,
     LoginForm,
