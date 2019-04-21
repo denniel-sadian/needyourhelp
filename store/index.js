@@ -3,7 +3,9 @@ import axios from 'axios'
 export const state = () => ({
   topics: [],
   auth: {},
-  token: ''
+  token: '',
+  verifiedQuestions: 0,
+  submitted: 0
 })
 
 export const mutations = {
@@ -15,6 +17,21 @@ export const mutations = {
   },
   SET_TOKEN(state, token) {
     state.token = token
+  },
+  INCREMENT_VERIFIED_QUESTIONS(state) {
+    state.verifiedQuestions++
+  },
+  DECREMENT_VERIFIED_QUESTIONS(state) {
+    state.verifiedQuestions--
+  },
+  CLEAR_VERIFIED_QUESTIONS(state) {
+    state.verifiedQuestions = 0
+  },
+  INCREMENT_SUBMITTED_RESPONSE(state) {
+    state.submitted++
+  },
+  CLEAR_SUBMITTED_RESPONSE(state) {
+    state.submitted = 0
   }
 }
 
@@ -41,5 +58,11 @@ export const getters = {
   },
   topics: state => {
     return state.topics
+  },
+  verifiedQuestions: state => {
+    return state.verifiedQuestions
+  },
+  submitted: state => {
+    return state.submitted
   }
 }

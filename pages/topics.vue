@@ -26,6 +26,7 @@
             ><v-icon>note_add</v-icon></v-btn
           >
           <v-btn
+            v-show="username"
             :outline="!showOnlyMyTopics"
             round
             :class="{
@@ -51,7 +52,7 @@
                 <div class="caption grey--text">Description</div>
                 <div>{{ topic.description.slice(0, 100) + '...' }}</div>
               </v-flex>
-              <v-flex xs6 md2>
+              <v-flex xs6 md1>
                 <div class="caption grey--text">Topic Owner</div>
                 <div v-if="topic.owner !== username">
                   {{ topic.owner_firstname + ' ' + topic.owner_lastname }}
@@ -66,7 +67,7 @@
                   {{ new Date(topic.date_started).toDateString() }}
                 </div>
               </v-flex>
-              <v-flex xs10 md1 text-md-center>
+              <v-flex xs8 md1 text-md-center>
                 <div class="caption grey--text">Status</div>
                 <div>
                   <v-chip v-if="topic.done" small class="green">Done</v-chip>
@@ -74,7 +75,7 @@
                 </div>
               </v-flex>
               <v-flex xs2 md1 text-xs-center>
-                <div class="caption grey--text">Action</div>
+                <div class="caption grey--text">Edit</div>
                 <div>
                   <v-btn
                     fab
@@ -83,6 +84,19 @@
                     :disabled="topic.owner !== username"
                     @click="$router.push(`/edit/${topic.id}/`)"
                     ><v-icon>edit</v-icon></v-btn
+                  >
+                </div>
+              </v-flex>
+              <v-flex xs2 md1 text-xs-center>
+                <div class="caption grey--text">Respond</div>
+                <div>
+                  <v-btn
+                    fab
+                    flat
+                    small
+                    :disabled="topic.done"
+                    @click="$router.push(`/respond/${topic.id}/`)"
+                    ><v-icon>check_circle</v-icon></v-btn
                   >
                 </div>
               </v-flex>
@@ -111,6 +125,7 @@
 
 <script>
 export default {
+  middleware: 'getTopics',
   data() {
     return {
       showOnlyMyTopics: false,

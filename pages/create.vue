@@ -82,6 +82,7 @@
 import axios from 'axios'
 
 export default {
+  middleware: 'userLoggedIn',
   data() {
     return {
       datePicker: false,

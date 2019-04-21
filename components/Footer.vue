@@ -2,13 +2,15 @@
   <v-footer id="footer" height="auto" mt-5>
     <v-layout row wrap text-xs-center>
       <v-flex xs12 pt-4>
-        <div class="title">{{ day }} quote</div>
-        <h1 class="display-2 my-3">"{{ quote }}"</h1>
-        <div>
-          - <span class="subheading">{{ whose }}</span>
-        </div>
+        <v-container>
+          <div class="title">{{ day }} quote</div>
+          <h1 class="display-2 my-3">"{{ quote }}"</h1>
+          <div>
+            - <span class="subheading">{{ whose }}</span>
+          </div>
+        </v-container>
       </v-flex>
-      <v-flex xs12 mt-5>
+      <v-flex xs12>
         <div class="purple">&copy; {{ year }}</div>
       </v-flex>
     </v-layout>

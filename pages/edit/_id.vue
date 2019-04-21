@@ -36,7 +36,7 @@
       </v-flex>
       <v-flex xs12>
         <v-layout row wrap>
-          <v-flex xs12 sm6 pa-1 mt-4>
+          <v-flex xs12 md6 pa-1 mt-4>
             <div class="subheading text-xs-center">
               Opinion-answered questions
             </div>
@@ -94,18 +94,18 @@
               >
             </div>
           </v-flex>
-          <v-flex xs12 sm6 pa-1 mt-4>
+          <v-flex xs12 md6 pa-1 mt-4>
             <div class="subheading text-xs-center">
               Multiple choice questions
             </div>
             <template v-for="q in multiples_">
               <v-card :key="q.text" flat class="pa-3">
                 <v-layout row wrap>
-                  <v-flex xs12 sm5>
+                  <v-flex xs12 sm3>
                     <div class="caption grey--text">Question</div>
                     <div class="subheading">{{ q.text }}</div>
                   </v-flex>
-                  <v-flex xs12 sm5 text-sm-center>
+                  <v-flex xs12 sm3 text-sm-center>
                     <div class="caption grey--text">Choices</div>
                     <div>
                       <v-chip
@@ -120,7 +120,7 @@
                     <div v-if="q.multiple" class="subheading">Yes</div>
                     <div v-else class="subheading">No</div>
                   </v-flex>
-                  <v-flex xs2 sm6 text-xs-center>
+                  <v-flex xs2 sm2 text-xs-center>
                     <div class="caption grey--text">Delete</div>
                     <div>
                       <v-btn
@@ -135,7 +135,7 @@
                       >
                     </div>
                   </v-flex>
-                  <v-flex xs2 sm6 text-xs-center>
+                  <v-flex xs2 sm2 text-xs-center>
                     <div class="caption grey--text">Edit</div>
                     <div>
                       <v-btn fab flat small @click="prepareMultipleChoice(q)"
@@ -456,6 +456,7 @@
 import axios from 'axios'
 
 export default {
+  middleware: 'checkOwnership',
   validate({ params }) {
     // Must be a number
     return /^\d+$/.test(params.id)
@@ -657,6 +658,7 @@ export default {
         await this.client
           .patch(`${this.multiplechoicesURL}${this.edittingQuestionID}/`, {
             text: this.question,
+            multiple: this.questionMultiple,
             topic: this.id
           })
           .then(() => {
