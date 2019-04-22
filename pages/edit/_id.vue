@@ -264,6 +264,7 @@
                   outline
                   label="Question"
                   required
+                  @keyup.enter="editQuestion()"
                 ></v-text-field>
               </v-flex>
             </v-layout>
@@ -358,6 +359,7 @@
                   outline
                   label="Question"
                   required
+                  @keyup.enter="addQuestion()"
                 ></v-text-field>
               </v-flex>
             </v-layout>
@@ -389,6 +391,7 @@
                   outline
                   label="Question"
                   required
+                  @keyup.enter="addRawMultipleChoice()"
                 ></v-text-field>
               </v-flex>
               <v-flex xs12>
@@ -405,6 +408,7 @@
                   outline
                   label="Choice"
                   required
+                  @keyup.enter="addRawChoice()"
                 ></v-text-field>
               </v-flex>
               <v-flex xs8>
@@ -445,7 +449,14 @@
     >
       There was an error. It is either your session has expired or you are
       unauthorized to access this topic.
-      <v-btn fab flat @click="error = false">
+      <v-btn
+        fab
+        flat
+        @click="
+          error = false
+          $router.push($route.path)
+        "
+      >
         <v-icon>cancel</v-icon>
       </v-btn>
     </v-snackbar>
@@ -740,6 +751,9 @@ export default {
             this.question = ''
             this.rawAddQuestionModal = false
           })
+          .catch(() => {
+            this.exposeError()
+          })
       }
     },
     async addRawMultipleChoice() {
@@ -762,14 +776,22 @@ export default {
             }
             this.getMultiples()
             this.rawMultiplechoiceModal = false
+            this.rawChoices = []
+            this.question = ''
+            this.questionMultiple = false
+          })
+          .catch(() => {
+            this.exposeError()
           })
       }
     },
     addRawChoice() {
       if (this.choice) {
-        this.rawChoices.push(this.choice)
-        this.choice = ''
+        if (!this.rawChoices.includes(this.choice)) {
+          this.rawChoices.push(this.choice)
+        }
       }
+      this.choice = ''
     },
     rawRemoveChoice(c) {
       this.rawChoices.splice(this.rawChoices.indexOf(c), 1)

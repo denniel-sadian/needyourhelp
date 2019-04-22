@@ -1,3 +1,6 @@
+// For determining whether the current user is authorized to
+// edit the topic.
+
 import axios from 'axios'
 
 export default async function({ store, redirect, route }) {

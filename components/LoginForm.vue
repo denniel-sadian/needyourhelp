@@ -14,6 +14,7 @@
                   outline
                   label="Username"
                   required
+                  @keyup.enter="loginUser()"
                 ></v-text-field>
               </v-flex>
               <v-flex>
@@ -23,6 +24,7 @@
                   label="Password"
                   required
                   type="password"
+                  @keyup.enter="loginUser()"
                 ></v-text-field>
               </v-flex>
             </v-layout>
@@ -89,7 +91,7 @@ export default {
       if (this.$store.getters.auth.username) {
         return `${this.$store.getters.auth.first_name} ${
           this.$store.getters.auth.last_name
-        }`
+        }`.toUpperCase()
       } else return false
     }
   },

@@ -1,3 +1,5 @@
+// Utility function for getting the authenticated user.
+
 import axios from 'axios'
 
 export default async store => {

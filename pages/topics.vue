@@ -48,7 +48,7 @@
                 <div class="caption grey--text">Topic Title</div>
                 <div class="subheading">{{ topic.title }}</div>
               </v-flex>
-              <v-flex xs12 md3>
+              <v-flex xs12 md2>
                 <div class="caption grey--text">Description</div>
                 <div>{{ topic.description.slice(0, 100) + '...' }}</div>
               </v-flex>
@@ -67,14 +67,14 @@
                   {{ new Date(topic.date_started).toDateString() }}
                 </div>
               </v-flex>
-              <v-flex xs8 md1 text-md-center>
+              <v-flex xs3 md1 text-xs-center>
                 <div class="caption grey--text">Status</div>
                 <div>
                   <v-chip v-if="topic.done" small class="green">Done</v-chip>
                   <v-chip v-else small class="orange">On going</v-chip>
                 </div>
               </v-flex>
-              <v-flex xs2 md1 text-xs-center>
+              <v-flex xs3 md1 text-xs-center>
                 <div class="caption grey--text">Edit</div>
                 <div>
                   <v-btn
@@ -87,6 +87,19 @@
                   >
                 </div>
               </v-flex>
+              <v-flex xs3 md1 text-xs-center>
+                <div class="caption grey--text">Results</div>
+                <div>
+                  <v-btn
+                    fab
+                    flat
+                    small
+                    :disabled="disableResults(topic)"
+                    @click="$router.push(`/results/${topic.id}`)"
+                    ><v-icon>list</v-icon></v-btn
+                  >
+                </div>
+              </v-flex>
               <v-flex xs2 md1 text-xs-center>
                 <div class="caption grey--text">Respond</div>
                 <div>
@@ -95,7 +108,7 @@
                     flat
                     small
                     :disabled="topic.done"
-                    @click="$router.push(`/respond/${topic.id}/`)"
+                    @click="respond(topic.id)"
                     ><v-icon>check_circle</v-icon></v-btn
                   >
                 </div>
@@ -120,22 +133,49 @@
         <v-icon>cancel</v-icon>
       </v-btn>
     </v-snackbar>
+    <v-snackbar
+      v-model="respondedAlready"
+      :timeout="6000"
+      color="green"
+      top
+      multi-line
+      class="subheading"
+    >
+      You have answered the questions in this topic already. Thanks for
+      responding!
+      <v-btn fab flat @click="respondedAlready = false">
+        <v-icon>cancel</v-icon>
+      </v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   middleware: 'getTopics',
   data() {
     return {
       showOnlyMyTopics: false,
-      noUser: false
+      noUser: false,
+      respondedAlready: false
     }
   },
   computed: {
     username() {
       if (this.$store.getters.auth.username) {
         return this.$store.getters.auth.username
+      } else return false
+    },
+    firstname() {
+      if (this.username)
+        return this.$store.getters.auth.first_name.toLowerCase()
+      else return false
+    },
+    lastname() {
+      if (this.username) {
+        return this.$store.getters.auth.last_name.toLowerCase()
       } else return false
     },
     topics() {
@@ -152,9 +192,27 @@ export default {
       if (this.username) {
         this.$router.push('create')
       } else this.noUser = true
+    },
+    disableResults(topic) {
+      if (this.username) {
+        if (this.username !== topic.owner) return true
+        else return false
+      } else if (topic.done) return false
+      else return true
+    },
+    async respond(id) {
+      if (this.username) {
+        await axios
+          .post(`http://127.0.0.1:8000/topics/${id}/responded/`, {
+            firstname: this.firstname,
+            lastname: this.lastname
+          })
+          .then(res => {
+            if (res.data.responded) this.respondedAlready = true
+            else this.$router.push(`/respond/${id}/`)
+          })
+      } else this.$router.push(`/respond/${id}/`)
     }
   }
 }
 </script>
-
-<style scoped></style>

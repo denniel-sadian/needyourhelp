@@ -19,8 +19,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   props: {
     question: {
@@ -63,17 +61,17 @@ export default {
         this.$store.commit('DECREMENT_VERIFIED_QUESTIONS')
       }
     },
-    async submit(v) {
+    submit(v) {
       if (v) {
-        await axios
-          .post(this.respondLink, {
+        this.$store.commit('ADD_TO_SUBMIT', {
+          postURL: this.respondLink,
+          data: {
             first_name: this.firstname,
             last_name: this.lastname,
             text: this.opinion
-          })
-          .then(() => {
-            this.$store.commit('INCREMENT_SUBMITTED_RESPONSE')
-          })
+          }
+        })
+        this.$store.commit('INCREMENT_PREPARED_QUESTIONS')
       }
     }
   }

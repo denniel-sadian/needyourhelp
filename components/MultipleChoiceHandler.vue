@@ -40,8 +40,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   props: {
     question: {
@@ -91,26 +89,27 @@ export default {
         }
       }
     },
-    async submit(v) {
+    submit(v) {
       if (v) {
         if (this.question.multiple) {
-          for (const i in this.chosenChoices) {
-            await axios.post(this.buildChooseUrl(this.chosenChoices[i]), {
-              first_name: this.firstname,
-              last_name: this.lastname
+          for (const i in this.chosenChoices)
+            this.$store.commit('ADD_TO_SUBMIT', {
+              postURL: this.buildChooseUrl(this.chosenChoices[i]),
+              data: {
+                first_name: this.firstname,
+                last_name: this.lastname
+              }
             })
-          }
-          this.$store.commit('INCREMENT_SUBMITTED_RESPONSE')
         } else {
-          await axios
-            .post(this.buildChooseUrl(this.chosenOne), {
+          this.$store.commit('ADD_TO_SUBMIT', {
+            postURL: this.buildChooseUrl(this.chosenOne),
+            data: {
               first_name: this.firstname,
               last_name: this.lastname
-            })
-            .then(() => {
-              this.$store.commit('INCREMENT_SUBMITTED_RESPONSE')
-            })
+            }
+          })
         }
+        this.$store.commit('INCREMENT_PREPARED_QUESTIONS')
       }
     }
   },

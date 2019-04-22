@@ -40,6 +40,7 @@
               label="Your first name"
               :disabled="fullname !== ''"
               outline
+              @input="checkIfRespondedAlready()"
             ></v-text-field>
           </v-container>
         </v-flex>
@@ -50,6 +51,7 @@
               label="Your last name"
               :disabled="fullname !== ''"
               outline
+              @input="checkIfRespondedAlready()"
             ></v-text-field>
           </v-container>
         </v-flex>
@@ -94,15 +96,15 @@
         <v-flex>
           <div>
             <v-btn
-              v-if="formComplete"
+              v-if="formComplete & !respondedAlready"
               block
               round
               class="green"
-              @click="
-                submit = true
-                submittingModal = true
-              "
+              @click="prepareSubmit()"
               >I am done!</v-btn
+            >
+            <v-btn v-else-if="respondedAlready" block round outline class="pink"
+              >You've responded to this survey already.</v-btn
             >
             <v-btn v-else block round outline class="green"
               >You're not yet done</v-btn
@@ -125,6 +127,33 @@
         </v-card>
       </v-dialog>
     </div>
+
+    <v-layout row justify-center>
+      <v-dialog v-model="confirmSubmit" persistent max-width="290">
+        <v-card>
+          <v-card-title class="headline">Confirmation</v-card-title>
+          <v-card-text
+            >Are you sure and ready to submit your answers?</v-card-text
+          >
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="pink" flat @click="confirmSubmit = !confirmSubmit"
+              >Nope</v-btn
+            >
+            <v-btn
+              color="green"
+              flat
+              @click="
+                trulySubmit()
+                confirmSubmit = false
+                submittingModal = true
+              "
+              >Yes</v-btn
+            >
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-layout>
   </v-container>
 </template>
 
@@ -135,6 +164,7 @@ import QuestionHandler from '~/components/QuestionHandler.vue'
 import MultipleChoiceHandler from '~/components/MultipleChoiceHandler.vue'
 
 export default {
+  middleware: 'canStillRespond',
   components: {
     QuestionHandler,
     MultipleChoiceHandler
@@ -145,6 +175,7 @@ export default {
   },
   data() {
     return {
+      id: null,
       title: '',
       desc: '',
       owner: '',
@@ -156,7 +187,9 @@ export default {
       doneAnswering: false,
       notComplete: false,
       submit: false,
-      submittingModal: false
+      submittingModal: false,
+      respondedAlready: false,
+      confirmSubmit: false
     }
   },
   computed: {
@@ -188,6 +221,12 @@ export default {
     totalQuestions() {
       return this.questions.length + this.multiples.length
     },
+    preparedQuestions() {
+      return this.$store.getters.preparedQuestions
+    },
+    toSubmit() {
+      return this.$store.getters.toSubmit
+    },
     formComplete() {
       if (
         (this.totalQuestions === this.verifiedQuestions) &
@@ -206,7 +245,8 @@ export default {
       }
     },
     submittingProgress(v) {
-      if (v >= 100) this.$router.push('/respond/thankyou')
+      if (v >= 100)
+        setTimeout(() => this.$router.push('/respond/thankyou'), 1000)
     }
   },
   async asyncData({ params, store }) {
@@ -217,6 +257,7 @@ export default {
       data.desc = res.data.description
       data.owner = `${res.data.owner_firstname} ${res.data.owner_lastname}`
       data.done = res.data.done
+      data.id = params.id
     })
     await axios.get(`${root}questions/`).then(res => {
       data.questions = res.data
@@ -238,6 +279,44 @@ export default {
     store.commit('CLEAR_VERIFIED_QUESTIONS')
     store.commit('CLEAR_SUBMITTED_RESPONSE')
     return data
+  },
+  methods: {
+    checkIfRespondedAlready() {
+      if ((this.firstname !== '') & (this.lastname !== '')) {
+        axios
+          .post(`http://127.0.0.1:8000/topics/${this.id}/responded/`, {
+            firstname: this.firstname,
+            lastname: this.lastname
+          })
+          .then(res => {
+            if (res.data.responded) this.respondedAlready = true
+            else this.respondedAlready = false
+          })
+      }
+    },
+    async prepareSubmit() {
+      await axios
+        .post('http://127.0.0.1:8000/create-interviewee/', {
+          first_name: this.firstname,
+          last_name: this.lastname
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.submit = true
+          this.confirmSubmit = true
+        })
+    },
+    async trulySubmit() {
+      if (this.preparedQuestions === this.totalQuestions) {
+        for (const i in this.toSubmit) {
+          await axios
+            .post(this.toSubmit[i].url, this.toSubmit[i].data)
+            .then(() => {
+              this.$store.commit('INCREMENT_SUBMITTED_RESPONSE')
+            })
+        }
+      }
+    }
   }
 }
 </script>

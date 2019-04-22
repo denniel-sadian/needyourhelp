@@ -87,7 +87,9 @@
             <v-card-title primary-title>
               <div>
                 <h3 class="headline mb-1">{{ desc.title }}</h3>
-                <div>{{ desc.content }}</div>
+                <div class="body-2">
+                  {{ desc.content }}
+                </div>
               </div>
             </v-card-title>
           </v-card>
@@ -96,78 +98,45 @@
       <v-divider />
     </v-container>
 
-    <v-container grid-list-sm mb-5>
-      <v-layout row wrap>
-        <v-flex d-flex xs12 text-xs-center>
-          <h1 class="display-3">How to use?</h1>
+    <v-container grid-list-xs mb-5>
+      <div class="text-xs-center display-1">How to use?</div>
+      <v-layout row align-center justify-center wrap text-xs-center pt-5>
+        <v-flex xs12 sm4 display-4>1<sup>st</sup> </v-flex>
+        <v-flex xs12 sm8 subheading text-md-left>
+          If you have a topic that you wish to conduct a survey with. You can
+          create it here. First, you create your account, and all the topics you
+          create will reference to you. Creating you account is very easy, try
+          to create one now!
         </v-flex>
-        <v-flex d-flex xs12>
-          <v-layout row wrap>
-            <v-flex d-flex sm4 xs12>
-              <v-card>
-                <v-card-text class="display-4 text-xs-center"
-                  >1<sup>st</sup></v-card-text
-                >
-              </v-card>
-            </v-flex>
-            <v-flex d-flex sm8 xs12>
-              <v-card>
-                <v-card-text class="headline">
-                  If you have a topic that you wish to conduct a survey with,
-                  then you must first create an account. With that, your
-                  respondents will be able to know who is the owner of the
-                  topic.
-                </v-card-text>
-              </v-card>
-            </v-flex>
-          </v-layout>
+      </v-layout>
+      <v-layout row align-center justify-center wrap text-xs-center pt-5>
+        <v-flex xs12 sm4 order-sm2 display-4>2<sup>nd</sup> </v-flex>
+        <v-flex xs12 sm8 subheading text-md-right>
+          Great! Now you have your account, it's now time to create topics!
+          Creating topics is just a piece of cake. You just have to head over to
+          the
+          <nuxt-link to="/topics" class="subheading yellow--text"
+            >Topics</nuxt-link
+          >
+          page. This website lets you build a questionaire that has two kinds of
+          questions. One that can be answered by pure opinions of the
+          respondents, good for qualitative research. And the other one that has
+          multiple choices, which is good for quantitative research.
         </v-flex>
-        <v-flex d-flex xs12 mt-4>
-          <v-layout row wrap>
-            <v-flex d-flex sm8 xs12 order-xs2 order-sm1>
-              <v-card>
-                <v-card-text class="headline">
-                  You begin creating your topics. Also This website allows you
-                  to dynamically create question sheets that contain the
-                  questions that your topics need. It provides you two types of
-                  questions: a text-answered question and a multiple choice
-                  question.
-                </v-card-text>
-              </v-card>
-            </v-flex>
-            <v-flex d-flex sm4 xs12 order-xs1 order-sm2>
-              <v-card>
-                <v-card-text class="display-4 text-xs-center"
-                  >2<sup>nd</sup></v-card-text
-                >
-              </v-card>
-            </v-flex>
-          </v-layout>
-        </v-flex>
-        <v-flex d-flex xs12 mt-4>
-          <v-layout row wrap>
-            <v-flex d-flex sm4 xs12>
-              <v-card>
-                <v-card-text class="display-4 text-xs-center"
-                  >3<sup>rd</sup></v-card-text
-                >
-              </v-card>
-            </v-flex>
-            <v-flex d-flex sm8 xs12>
-              <v-card>
-                <v-card-text class="headline">
-                  You share the link of your topics to anyone - your
-                  respondents. You can post the link as well to any social media
-                  platform to boost the coverage of the survey. You can always
-                  take a peek of the automatically calculated results of your
-                  topics.
-                </v-card-text>
-              </v-card>
-            </v-flex>
-          </v-layout>
+      </v-layout>
+      <v-layout row align-center justify-center wrap text-xs-center pt-5>
+        <v-flex xs12 sm4 display-4>3<sup>rd </sup> </v-flex>
+        <v-flex xs12 sm8 subheading text-md-left>
+          Now, you're done with the creation of your topic. You can now share
+          the link of your topic to your respondents. Sharing the link to social
+          platforms you like will do very well as well. The results of your
+          topic will only be visible to you, but if you mark your topic as done,
+          anyone will be able to see the results. All of the calculations will
+          be done for you.
         </v-flex>
       </v-layout>
     </v-container>
+
     <v-snackbar
       v-model="getSartedSnack"
       :timeout="5000"

@@ -72,7 +72,7 @@
             </v-list-tile>
           </v-list>
         </v-toolbar>
-        <v-list dense>
+        <v-list dense pt-0>
           <v-divider light></v-divider>
           <v-list-tile @click="$router.push({ name: 'topics' })">
             <v-list-tile-action>

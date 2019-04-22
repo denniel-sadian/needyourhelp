@@ -5,7 +5,9 @@ export const state = () => ({
   auth: {},
   token: '',
   verifiedQuestions: 0,
-  submitted: 0
+  submitted: 0,
+  toSubmit: [],
+  preparedQuestions: 0
 })
 
 export const mutations = {
@@ -32,6 +34,14 @@ export const mutations = {
   },
   CLEAR_SUBMITTED_RESPONSE(state) {
     state.submitted = 0
+    state.toSubmit = []
+    state.preparedQuestions = 0
+  },
+  ADD_TO_SUBMIT(state, data) {
+    state.toSubmit.push({ url: data.postURL, data: data.data })
+  },
+  INCREMENT_PREPARED_QUESTIONS(state) {
+    state.preparedQuestions++
   }
 }
 
@@ -64,5 +74,11 @@ export const getters = {
   },
   submitted: state => {
     return state.submitted
+  },
+  toSubmit: state => {
+    return state.toSubmit
+  },
+  preparedQuestions: state => {
+    return state.preparedQuestions
   }
 }

@@ -9,6 +9,7 @@
           v-model="topicTitle"
           label="Topic title"
           outline
+          @keyup.enter="save()"
         ></v-text-field>
       </v-flex>
       <v-flex d-flex xs12>
@@ -28,6 +29,7 @@
               label="Date Started"
               outline
               readonly
+              @keyup.enter="save()"
               v-on="on"
             ></v-text-field>
           </template>
