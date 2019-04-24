@@ -107,7 +107,7 @@ export default {
         (this.dateStarted !== '')
       ) {
         const client = axios.create({
-          baseURL: 'http://127.0.0.1:8000/',
+          baseURL: 'https://needyourhelp-api.herokuapp.com/',
           headers: {
             Authorization: `Bearer ${this.token}`
           }
@@ -125,6 +125,28 @@ export default {
             this.error = true
           })
       }
+    }
+  },
+  head() {
+    return {
+      title: 'Need Your Help - Create',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Create your topic to this page.'
+        },
+        {
+          hid: 'twitter-title',
+          name: 'twitter:title',
+          content: 'Need Your Help - Create'
+        },
+        {
+          hid: 'twitter-desc',
+          name: 'twitter:description',
+          content: 'Create your topic to this page.'
+        }
+      ]
     }
   }
 }

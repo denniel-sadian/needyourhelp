@@ -12,10 +12,26 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: pkg.description }
+      { hid: 'description', name: 'description', content: pkg.description },
+      {
+        hid: 'twitter-preview_img',
+        name: 'twitter:image',
+        content: '/images/logo.png'
+      },
+      {
+        hid: 'preview_img',
+        property: 'og:image',
+        content: '/images/logo.png'
+      },
+      {
+        hid: 'website_type',
+        property: 'og:type',
+        content: 'website'
+      }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/x-icon', href: '/images/logo.png' },
+      { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' },
       {
         rel: 'stylesheet',
         href:

@@ -2,46 +2,38 @@
   <v-container container mt-5>
     <v-layout row wrap>
       <v-flex xs12>
-        <h1 class="title"><v-icon>list</v-icon> Topics</h1>
-      </v-flex>
-      <v-flex xs12 text-xs-right>
-        <div class="hidden-xs-only">
-          <v-btn outline round @click="navigateToCreationPage()"
-            >Create Topic <v-icon right>note_add</v-icon></v-btn
-          >
-          <v-btn
-            v-show="username"
-            :outline="!showOnlyMyTopics"
-            round
-            :class="{
-              yellow: showOnlyMyTopics,
-              'black--text': showOnlyMyTopics
-            }"
-            @click="showOnlyMyTopics = !showOnlyMyTopics"
-            >My Topics <v-icon right>view_list</v-icon></v-btn
-          >
-        </div>
-        <div class="hidden-sm-and-up">
-          <v-btn fab outline small @click="navigateToCreationPage()"
-            ><v-icon>note_add</v-icon></v-btn
-          >
-          <v-btn
-            v-show="username"
-            :outline="!showOnlyMyTopics"
-            round
-            :class="{
-              yellow: showOnlyMyTopics,
-              'black--text': showOnlyMyTopics
-            }"
-            fab
-            small
-            @click="showOnlyMyTopics = !showOnlyMyTopics"
-            ><v-icon>view_list</v-icon></v-btn
-          >
-        </div>
+        <h1 class="title">
+          <v-icon>list</v-icon> There <span v-if="topics.length > 1">are</span
+          ><span v-else>is</span> {{ topics.length }} topic<span
+            v-show="topics.length > 1"
+            >s</span
+          >.
+        </h1>
       </v-flex>
       <v-flex xs12 mt-3>
-        <template v-for="(topic, index) in topics">
+        <v-text-field
+          v-model="search"
+          outline
+          label="Search topic"
+          hide-details
+        ></v-text-field>
+      </v-flex>
+      <v-flex xs12 py-2>
+        <v-select
+          v-model="selectedFilter"
+          hide-details
+          :items="filters"
+          label="Filter"
+          outline
+        ></v-select>
+      </v-flex>
+      <v-flex xs12 text-xs-right py-2>
+        <v-btn outline block round @click="navigateToCreationPage()"
+          >Create Topic <v-icon right>note_add</v-icon></v-btn
+        >
+      </v-flex>
+      <v-flex v-if="topics.length > 0" xs12 mt-3>
+        <template v-for="(topic, index) in pagedTopics">
           <v-card :key="topic.title" flat class="pa-3">
             <v-layout row wrap>
               <v-flex xs12 md3>
@@ -118,7 +110,23 @@
           <v-divider :key="index"></v-divider>
         </template>
       </v-flex>
+      <v-flex v-else xs12 text-xs-center mt-5>
+        <div class="pink--text headline font-weight-black">
+          No topic for this filter.
+        </div>
+      </v-flex>
     </v-layout>
+
+    <v-container v-show="topics.length > size" grid-list-xs text-xs-center>
+      <v-pagination
+        v-model="page"
+        circle
+        color="purple"
+        :length="max"
+        :total-visible="5"
+      ></v-pagination>
+    </v-container>
+
     <v-snackbar
       v-model="noUser"
       :timeout="6000"
@@ -154,15 +162,25 @@
 import axios from 'axios'
 
 export default {
+  watchQuery: ['page'],
   middleware: 'getTopics',
   data() {
     return {
+      filters: ['All topics', 'My topics', 'Done topics', 'On going topics'],
+      search: '',
+      selectedFilter: 'All topics',
       showOnlyMyTopics: false,
       noUser: false,
-      respondedAlready: false
+      respondedAlready: false,
+      page: 1,
+      size: 12
     }
   },
   computed: {
+    max() {
+      const raw = this.topics.length / this.size
+      return Math.ceil(raw)
+    },
     username() {
       if (this.$store.getters.auth.username) {
         return this.$store.getters.auth.username
@@ -178,14 +196,62 @@ export default {
         return this.$store.getters.auth.last_name.toLowerCase()
       } else return false
     },
-    topics() {
-      if (this.showOnlyMyTopics) {
-        return this.$store.getters.topics.filter(t => {
-          return t.owner === this.username
-        })
+    computedPage() {
+      let n = 0
+      if (this.$route.query.page) {
+        n = Number(this.$route.query.page) - 1
       }
-      return this.$store.getters.topics
+      return n
+    },
+    pagedTopics() {
+      const start = this.computedPage * this.size
+      const end = start + this.size
+      return this.topics.slice(start, end)
+    },
+    topics() {
+      let topics = []
+      if (this.selectedFilter === 'My topics')
+        topics = this.$store.getters.topics.filter(
+          t => t.owner === this.username
+        )
+      else if (this.selectedFilter === 'All topics')
+        topics = this.$store.getters.topics
+      else if (this.selectedFilter === 'Done topics')
+        topics = this.$store.getters.topics.filter(t => t.done)
+      else if (this.selectedFilter === 'On going topics')
+        topics = this.$store.getters.topics.filter(t => !t.done)
+      if (this.search !== '')
+        topics = topics.filter(t =>
+          t.title.toLowerCase().includes(this.search.toLowerCase())
+        )
+      return topics
+    },
+    headDesc() {
+      return `We currently have ${this.veryTopicsCount} topics.
+      Help your fellow people by giving some time to respond to their
+      topics, that would be very lovely!`
     }
+  },
+  watch: {
+    page(v) {
+      const q = { page: v, filter: this.selectedFilter }
+      if (this.search) q.search = this.search
+      this.$router.push({ name: 'topics', query: q })
+    },
+    search() {
+      this.page = 1
+    },
+    selectedFilter() {
+      this.page = 1
+    }
+  },
+  async asyncData({ query, store }) {
+    const data = { page: 1 }
+    if (query.page) data.page = Number(query.page)
+    if (query.search) data.search = query.search
+    if (query.filter) data.selectedFilter = query.filter
+    data.veryTopicsCount = await store.getters.topics.length
+    return data
   },
   methods: {
     navigateToCreationPage() {
@@ -200,18 +266,51 @@ export default {
       } else if (topic.done) return false
       else return true
     },
+    goPrevious() {
+      // this.$scrollTo('#projects', 0, { force: true })
+      this.$router.push(this.previousLink)
+    },
+    goNext() {
+      // this.$scrollTo('#projects', 0, { force: true })
+      this.$router.push(this.nextLink)
+    },
     async respond(id) {
       if (this.username) {
         await axios
-          .post(`http://127.0.0.1:8000/topics/${id}/responded/`, {
-            firstname: this.firstname,
-            lastname: this.lastname
-          })
+          .post(
+            `https://needyourhelp-api.herokuapp.com/topics/${id}/responded/`,
+            {
+              firstname: this.firstname,
+              lastname: this.lastname
+            }
+          )
           .then(res => {
             if (res.data.responded) this.respondedAlready = true
             else this.$router.push(`/respond/${id}/`)
           })
       } else this.$router.push(`/respond/${id}/`)
+    }
+  },
+  head() {
+    return {
+      title: 'Need Your Help - Topics',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.headDesc
+        },
+        {
+          hid: 'twitter-title',
+          name: 'twitter:title',
+          content: 'Need Your Help - Topics'
+        },
+        {
+          hid: 'twitter-desc',
+          name: 'twitter:description',
+          content: this.headDesc
+        }
+      ]
     }
   }
 }

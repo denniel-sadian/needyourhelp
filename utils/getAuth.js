@@ -7,7 +7,7 @@ export default async store => {
   if (localStorage.getItem('needyourhelp_access') !== null) {
     store.commit('SET_TOKEN', localStorage.getItem('needyourhelp_access'))
     const client = axios.create({
-      baseURL: 'http://127.0.0.1:8000/',
+      baseURL: 'https://needyourhelp-api.herokuapp.com/',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('needyourhelp_access')}`
       }

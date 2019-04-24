@@ -1,7 +1,10 @@
 <template>
   <v-container grid-list-xs>
     <v-flex xs12 mt-5>
-      <h1 class="text-xs-center display-2">
+      <h1 class="font-weight-black display-2 text-xs-center">
+        {{ title.toUpperCase() }}
+      </h1>
+      <p class="mt-5 text-sm-center subheading">
         Welcome,
         <span v-if="fullname">{{ fullname }}</span>
         <span v-else-if="(firstname === '') | (lastname === '')"
@@ -9,17 +12,9 @@
         >
         <span v-else>{{ firstname + ' ' + lastname }}</span
         >!
-      </h1>
-      <p class="mt-5 text-sm-center subheading">
-        <span class="title font-weight-black yellow--text">{{
-          owner.toUpperCase()
-        }}</span>
-        would like to interview you about the topic "<span
-          class="title font-weight-black yellow--text"
-          >{{ title.toUpperCase() }}</span
-        >".
+        {{ headDesc }}
       </p>
-      <p class="subheading">{{ desc }}</p>
+      <p class="subheading text-sm-center">{{ desc }}</p>
       <v-divider></v-divider>
     </v-flex>
     <v-flex xs12 mt-5>
@@ -59,14 +54,14 @@
     </v-flex>
     <v-flex xs12 mt-5>
       <v-layout column>
-        <v-flex mb-3>
+        <v-flex v-show="questions.length > 0" mb-3>
           <div class="subheading">
             Kindly give your opinions for these questions.
           </div>
         </v-flex>
-        <v-flex>
-          <v-layout column>
-            <v-flex v-for="q in questions" :key="q.text">
+        <v-flex v-show="questions.length > 0">
+          <v-layout row wrap>
+            <v-flex v-for="q in questions" :key="q.text" md6>
               <QuestionHandler
                 :question="q"
                 :firstname="firstname"
@@ -76,14 +71,14 @@
             </v-flex>
           </v-layout>
         </v-flex>
-        <v-flex mt-5>
+        <v-flex v-show="multiples.length > 0" mt-5>
           <div class="subheading">
             Kindly answer these multiple choice questions.
           </div>
         </v-flex>
-        <v-flex>
-          <v-layout column>
-            <v-flex v-for="q in multiples" :key="q.text">
+        <v-flex v-show="multiples.length > 0">
+          <v-layout row wrap>
+            <v-flex v-for="q in multiples" :key="q.text" md6>
               <MultipleChoiceHandler
                 :question="q"
                 :firstname="firstname"
@@ -193,11 +188,22 @@ export default {
     }
   },
   computed: {
+    headDesc() {
+      return `Hello! ${this.owner.toUpperCase()} needs your help!
+      Your response to this topic would be very much appreciated.
+      It has ${
+        this.questions.length > 0 ? this.questions.length : 'no'
+      } opinion-answered
+      question${this.questions.length > 1 ? 's' : ''} and ${
+        this.multiples.length > 0 ? this.multiples.length : 'no'
+      }
+      multiple-choice${this.multiples.length > 1 ? 's' : ''} only.`
+    },
     token() {
       return this.$store.getters.token
     },
     client() {
-      const config = { baseURL: 'http://127.0.0.1:8000/' }
+      const config = { baseURL: 'https://needyourhelp-api.herokuapp.com/' }
       if (this.token !== '')
         config.headers = {
           Authorization: `Bearer ${this.token}`
@@ -251,7 +257,7 @@ export default {
   },
   async asyncData({ params, store }) {
     const data = {}
-    const root = `http://127.0.0.1:8000/topics/${params.id}/`
+    const root = `https://needyourhelp-api.herokuapp.com/topics/${params.id}/`
     await axios.get(root).then(res => {
       data.title = res.data.title
       data.desc = res.data.description
@@ -284,10 +290,15 @@ export default {
     checkIfRespondedAlready() {
       if ((this.firstname !== '') & (this.lastname !== '')) {
         axios
-          .post(`http://127.0.0.1:8000/topics/${this.id}/responded/`, {
-            firstname: this.firstname,
-            lastname: this.lastname
-          })
+          .post(
+            `https://needyourhelp-api.herokuapp.com/topics/${
+              this.id
+            }/responded/`,
+            {
+              firstname: this.firstname,
+              lastname: this.lastname
+            }
+          )
           .then(res => {
             if (res.data.responded) this.respondedAlready = true
             else this.respondedAlready = false
@@ -296,7 +307,7 @@ export default {
     },
     async prepareSubmit() {
       await axios
-        .post('http://127.0.0.1:8000/create-interviewee/', {
+        .post('https://needyourhelp-api.herokuapp.com/create-interviewee/', {
           first_name: this.firstname,
           last_name: this.lastname
         })
@@ -316,6 +327,38 @@ export default {
             })
         }
       }
+    }
+  },
+  head() {
+    return {
+      title: this.title,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.headDesc
+        },
+        {
+          hid: 'twitter-title',
+          name: 'twitter:title',
+          content: this.title
+        },
+        {
+          hid: 'twitter-desc',
+          name: 'twitter:description',
+          content: this.headDesc
+        },
+        {
+          hid: 'twitter-preview_img',
+          name: 'twitter:image',
+          content: '/images/hands.png'
+        },
+        {
+          hid: 'preview_img',
+          property: 'og:image',
+          content: '/images/hands.png'
+        }
+      ]
     }
   }
 }

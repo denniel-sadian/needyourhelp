@@ -1,6 +1,9 @@
 <template>
   <v-footer id="footer" height="auto" mt-5>
     <v-layout row wrap text-xs-center>
+      <v-flex xs12>
+        <div></div>
+      </v-flex>
       <v-flex xs12 pt-4>
         <v-container>
           <div class="title">{{ day }} quote</div>
@@ -11,7 +14,11 @@
         </v-container>
       </v-flex>
       <v-flex xs12>
-        <div class="purple">&copy; {{ year }}</div>
+        <v-container grid-list-xs class="purple darken-4" fluid pa-0>
+          <div class="text-xs-center pa-2 subheading">
+            &copy; {{ year }} Need Your Help
+          </div>
+        </v-container>
       </v-flex>
     </v-layout>
   </v-footer>
@@ -64,5 +71,6 @@ export default {
   background-attachment: fixed !important;
   background-size: cover !important;
   background-position: center !important;
+  border-top: 5px solid #4a148c;
 }
 </style>

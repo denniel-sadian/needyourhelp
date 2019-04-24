@@ -98,7 +98,7 @@ export default {
   methods: {
     loginUser() {
       axios
-        .post('http://127.0.0.1:8000/token/', {
+        .post('https://needyourhelp-api.herokuapp.com/token/', {
           username: this.username,
           password: this.password
         })

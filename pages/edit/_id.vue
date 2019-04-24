@@ -312,21 +312,24 @@
                   outline
                   label="Choice"
                   required
+                  @keyup.enter="addChoice()"
                 ></v-text-field>
               </v-flex>
-              <v-flex xs8>
+              <v-flex xs12 text-xs-center>
+                <v-btn outline @click="addChoice()">Add Choice</v-btn>
+                <v-btn outline @click="editChoice()">Update Choice</v-btn>
+              </v-flex>
+              <v-flex xs12>
                 <div class="text-xs-center">
                   <v-chip
                     v-for="c in choices"
                     :key="c.id + c.text"
                     close
+                    @click="prepareChoiceToEdit(c)"
                     @input="removeChoice(c.id)"
                     >{{ c.text }}</v-chip
                   >
                 </div>
-              </v-flex>
-              <v-flex xs4 text-xs-right>
-                <v-btn outline @click="addChoice()">Add Choice</v-btn>
               </v-flex>
             </v-layout>
           </v-card-text>
@@ -447,8 +450,9 @@
       multi-line
       class="subheading"
     >
-      There was an error. It is either your session has expired or you are
-      unauthorized to access this topic.
+      There was an error. Your session might be expired, you're trying to add a
+      choice that has been added already, or simply, your not authorized to edit
+      this topic.
       <v-btn
         fab
         flat
@@ -491,6 +495,7 @@ export default {
       choices: [],
       rawChoices: [],
       choice: '',
+      choiceID: null,
       questionMultiple: false,
       rawAddQuestionModal: false,
       confirmDeleteModal: false,
@@ -504,7 +509,7 @@ export default {
     },
     client() {
       const client = axios.create({
-        baseURL: 'http://127.0.0.1:8000/',
+        baseURL: 'https://needyourhelp-api.herokuapp.com/',
         headers: {
           Authorization: `Bearer ${this.token}`
         }
@@ -528,7 +533,7 @@ export default {
     }
   },
   async asyncData({ params }) {
-    const root = `http://127.0.0.1:8000/topics/${params.id}/`
+    const root = `https://needyourhelp-api.herokuapp.com/topics/${params.id}/`
     const data = {}
     await axios
       .get(root)
@@ -598,6 +603,29 @@ export default {
           })
       }
     },
+    prepareChoiceToEdit(c) {
+      this.choice = c.text
+      this.choiceID = c.id
+    },
+    async editChoice() {
+      if ((this.choice !== '') & (this.choiceID !== null)) {
+        await this.client
+          .patch(
+            `${this.multiplechoicesURL}${this.edittingQuestionID}/choices/${
+              this.choiceID
+            }/`,
+            { text: this.choice }
+          )
+          .then(() => {
+            this.choice = ''
+            this.choiceID = null
+            this.getChoicesOfEdittingQuestion(this.edittingQuestionID)
+          })
+          .catch(() => {
+            this.exposeError()
+          })
+      }
+    },
     async deleteQuestion(id) {
       await this.client
         .delete(`${this.questionsURL}${id}/`)
@@ -634,10 +662,10 @@ export default {
     },
     async save() {
       await this.client
-        .put(this.topicURL, {
+        .patch(this.topicURL, {
           title: this.title,
           description: this.desc,
-          date_started: this.data,
+          date_started: this.date,
           done: this.done
         })
         .then(() => {
@@ -684,20 +712,23 @@ export default {
           })
       }
     },
-    async prepareMultipleChoice(q) {
-      this.multiplechoiceModal = true
-      this.question = q.text
-      this.choices = []
-      this.edittingQuestionID = q.id
-      this.questionMultiple = q.multiple
+    async getChoicesOfEdittingQuestion(id) {
       await this.client
-        .get(`${this.multiplechoicesURL}${q.id}/choices/`)
+        .get(`${this.multiplechoicesURL}${id}/choices/`)
         .then(res => {
           this.choices = res.data
         })
         .catch(() => {
           this.exposeError()
         })
+    },
+    prepareMultipleChoice(q) {
+      this.multiplechoiceModal = true
+      this.question = q.text
+      this.choices = []
+      this.edittingQuestionID = q.id
+      this.questionMultiple = q.multiple
+      this.getChoicesOfEdittingQuestion(q.id)
     },
     async removeChoice(id) {
       await this.client.delete(
@@ -731,6 +762,7 @@ export default {
               .then(res => {
                 this.choices = res.data
                 this.choice = ''
+                this.choiceID = null
                 this.getMultiples()
               })
               .catch(() => {
@@ -801,6 +833,28 @@ export default {
       this.error = true
       this.$store.commit('SET_TOKEN', '')
       this.$store.commit('SET_AUTH', {})
+    }
+  },
+  head() {
+    return {
+      title: this.title + ' - Editing',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Edit a topic in this page.'
+        },
+        {
+          hid: 'twitter-title',
+          name: 'twitter:title',
+          content: this.title + ' - Editing'
+        },
+        {
+          hid: 'twitter-desc',
+          name: 'twitter:description',
+          content: 'Edit a topic in this page.'
+        }
+      ]
     }
   }
 }

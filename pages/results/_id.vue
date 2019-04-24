@@ -34,7 +34,7 @@
       </v-flex>
     </v-layout>
 
-    <v-layout row wrap mt-5>
+    <v-layout v-show="questions.length > 0" row wrap mt-5>
       <v-flex xs12>
         <h1 class="title"><v-icon>list</v-icon> Opinions to the questions</h1>
       </v-flex>
@@ -66,7 +66,7 @@
       </v-flex>
     </v-layout>
 
-    <v-layout row wrap mt-5>
+    <v-layout v-show="multiple_choice_questions.length > 0" row wrap mt-5>
       <v-flex xs12>
         <h1 class="title"><v-icon>list</v-icon> Multiple choices</h1>
       </v-flex>
@@ -74,11 +74,12 @@
         <v-container grid-list-xs>
           <div class="subheading">{{ m.question }}</div>
           <div v-show="m.choose_all" class="caption">
-            Respondents were asked to choose all that applies.
+            The respondents were asked to choose all that applies, so some
+            choices might have same percents.
           </div>
           <v-layout row>
             <v-flex xs12>
-              <template v-for="c in orderChoices(m.choices)">
+              <template v-for="c in m.choices">
                 <v-card :key="c.counts + Math.random()" flat class="pa-2">
                   <v-layout row text-sm-center wrap>
                     <v-flex xs4 md3 order-xs2 order-md1 text-xs-center>
@@ -111,6 +112,10 @@
         </v-container>
       </v-flex>
     </v-layout>
+
+    <!---
+    
+    --->
   </v-container>
 </template>
 
@@ -135,7 +140,7 @@ export default {
   async asyncData({ params, store }) {
     let data
     const config = {
-      baseURL: 'http://127.0.0.1:8000/'
+      baseURL: 'https://needyourhelp-api.herokuapp.com/'
     }
     if (store.getters.token) {
       config.headers = {
@@ -145,13 +150,12 @@ export default {
     const client = axios.create(config)
     await client.get(`topics/${params.id}/results/`).then(res => {
       data = res.data
+      for (const q in data.multiple_choice_questions) {
+        const question = data.multiple_choice_questions[q]
+        question.choices = question.choices.sort((a, b) => b.counts - a.counts)
+      }
     })
     return data
-  },
-  methods: {
-    orderChoices(c) {
-      return c.sort((a, b) => b.counts - a.counts)
-    }
   }
 }
 </script>

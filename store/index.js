@@ -50,9 +50,11 @@ export const actions = {
     await dispatch('getTopics')
   },
   async getTopics({ commit }) {
-    await axios.get('http://127.0.0.1:8000/topics/').then(res => {
-      commit('SET_TOPICS', res.data)
-    })
+    await axios
+      .get('https://needyourhelp-api.herokuapp.com/topics/')
+      .then(res => {
+        commit('SET_TOPICS', res.data)
+      })
   }
 }
 
