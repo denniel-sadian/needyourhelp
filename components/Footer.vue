@@ -15,9 +15,11 @@
       </v-flex>
       <v-flex xs12>
         <v-container grid-list-xs class="purple darken-4" fluid pa-0>
-          <div class="text-xs-center pa-2 subheading">
-            &copy; {{ year }} Need Your Help
-          </div>
+          <v-container grid-list-xs pa-0>
+            <div class="text-xs-left pa-3 subheading">
+              &copy; {{ year }} Need Your Help
+            </div>
+          </v-container>
         </v-container>
       </v-flex>
     </v-layout>
@@ -53,6 +55,9 @@ export default {
     },
     year() {
       return new Date().getFullYear()
+    },
+    facebookShareLink() {
+      return `https://www.needyourhelp.herokuapp.com${this.$route.path}`
     }
   },
   mounted() {
