@@ -96,8 +96,8 @@ export default {
     }
   },
   methods: {
-    loginUser() {
-      axios
+    async loginUser() {
+      await axios
         .post('https://needyourhelp-api.herokuapp.com/token/', {
           username: this.username,
           password: this.password

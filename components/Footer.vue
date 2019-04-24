@@ -19,6 +19,7 @@
             <div class="text-xs-left pa-3 subheading">
               &copy; {{ year }} Need Your Help
             </div>
+            <div class="sharethis-inline-share-buttons"></div>
           </v-container>
         </v-container>
       </v-flex>
