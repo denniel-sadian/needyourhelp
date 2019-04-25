@@ -1,4 +1,4 @@
-// For determining whether resondents can still view the respond page.
+// For determining whether respondents can still view the respond page.
 
 import axios from 'axios'
 
