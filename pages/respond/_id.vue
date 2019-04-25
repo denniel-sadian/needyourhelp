@@ -171,20 +171,19 @@ export default {
   data() {
     return {
       id: null,
-      title: '',
       desc: '',
-      owner: '',
       done: '',
-      firstname: '',
+      title: '',
       lastname: '',
+      firstname: '',
       questions: [],
       multiples: [],
-      doneAnswering: false,
-      notComplete: false,
       submit: false,
+      notComplete: false,
+      doneAnswering: false,
+      confirmSubmit: false,
       submittingModal: false,
-      respondedAlready: false,
-      confirmSubmit: false
+      respondedAlready: false
     }
   },
   computed: {
@@ -363,5 +362,3 @@ export default {
   }
 }
 </script>
-
-<style scoped></style>
