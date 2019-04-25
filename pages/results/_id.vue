@@ -130,9 +130,9 @@ export default {
   },
   data() {
     return {
-      respondents: [],
       total_respondents: 0,
       questions: [],
+      respondents: [],
       multiple_choice_questions: [],
       topic: {}
     }
