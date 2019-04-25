@@ -51,7 +51,15 @@
         ></v-toolbar-side-icon>
       </v-toolbar>
 
-      <v-navigation-drawer v-model="showNav" app right>
+      <v-navigation-drawer
+        v-model="showNav"
+        app
+        right
+        hidden-md-only
+        hidden-lg-only
+        hidden-xl-only
+        temporary
+      >
         <v-toolbar flat class="transparent">
           <v-list class="pa-0">
             <v-list-tile avatar>
