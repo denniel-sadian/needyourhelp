@@ -13,15 +13,16 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: pkg.description },
+      { hid: 'twitter-card', name: 'twitter:card', content: 'summary' },
       {
         hid: 'twitter-preview_img',
         name: 'twitter:image',
-        content: '/images/logo.png'
+        content: 'https://needyourhelp.herokuapp.com/images/logo.png'
       },
       {
         hid: 'preview_img',
         property: 'og:image',
-        content: '/images/logo.png'
+        content: 'https://needyourhelp.herokuapp.com/images/logo.png'
       },
       {
         hid: 'website_type',

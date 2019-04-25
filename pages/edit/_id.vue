@@ -157,7 +157,9 @@
             </div>
           </v-flex>
           <v-flex xs12 md6 mt-3 pa-2>
-            <v-btn block class="green" round @click="save()">Save</v-btn>
+            <v-btn block class="green" round :loading="saving" @click="save()"
+              >Save</v-btn
+            >
           </v-flex>
           <v-flex xs12 md6 mt-3 pa-2>
             <v-btn block round class="pink" @click="deleteModal = !deleteModal"
@@ -183,7 +185,9 @@
             <v-btn color="pink" flat @click="deleteModal = !deleteModal"
               >Nope</v-btn
             >
-            <v-btn color="green" flat @click="deleteTopic()">Yes</v-btn>
+            <v-btn color="green" flat :loading="deleting" @click="deleteTopic()"
+              >Yes</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -210,6 +214,7 @@
             <v-btn
               color="green"
               flat
+              :loading="workingWithQuestion"
               @click="deleteQuestion(questionIDToDelete)"
               >Yes</v-btn
             >
@@ -240,6 +245,7 @@
             <v-btn
               color="green"
               flat
+              :loading="workingWithQuestion"
               @click="deleteMultiple(questionIDToDelete)"
               >Yes</v-btn
             >
@@ -274,7 +280,13 @@
             <v-btn round class="pink" @click="questionModal = false"
               >Cancel</v-btn
             >
-            <v-btn round class="green" @click="editQuestion()">Update</v-btn>
+            <v-btn
+              round
+              class="green"
+              :loading="workingWithQuestion"
+              @click="editQuestion()"
+              >Update</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -316,8 +328,12 @@
                 ></v-text-field>
               </v-flex>
               <v-flex xs12 text-xs-center>
-                <v-btn outline @click="addChoice()">Add Choice</v-btn>
-                <v-btn outline @click="editChoice()">Update Choice</v-btn>
+                <v-btn outline :loading="addingChoice" @click="addChoice()"
+                  >Add Choice</v-btn
+                >
+                <v-btn outline :loading="updatingChoice" @click="editChoice()"
+                  >Update Choice</v-btn
+                >
               </v-flex>
               <v-flex xs12>
                 <div class="text-xs-center">
@@ -338,7 +354,11 @@
             <v-btn round class="pink" @click="multiplechoiceModal = false"
               >Cancel</v-btn
             >
-            <v-btn round class="green" @click="editMultipleChoice()"
+            <v-btn
+              round
+              class="green"
+              :loading="workingWithQuestion"
+              @click="editMultipleChoice()"
               >Update</v-btn
             >
           </v-card-actions>
@@ -372,7 +392,13 @@
             <v-btn round class="pink" @click="rawAddQuestionModal = false"
               >Cancel</v-btn
             >
-            <v-btn round class="green" @click="addQuestion()">Add</v-btn>
+            <v-btn
+              round
+              class="green"
+              :loading="workingWithQuestion"
+              @click="addQuestion()"
+              >Add</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -435,7 +461,11 @@
             <v-btn round class="pink" @click="rawMultiplechoiceModal = false"
               >Cancel</v-btn
             >
-            <v-btn round class="green" @click="addRawMultipleChoice()"
+            <v-btn
+              round
+              class="green"
+              :loading="workingWithQuestion"
+              @click="addRawMultipleChoice()"
               >Add</v-btn
             >
           </v-card-actions>
@@ -479,28 +509,33 @@ export default {
   data() {
     return {
       id: null,
-      title: '',
-      desc: '',
       date: null,
-      done: false,
+      choiceID: null,
+      questionIDToDelete: null,
+      edittingQuestionID: null,
+      desc: '',
+      title: '',
+      choice: '',
+      question: '',
+      choices: [],
       questions: [],
       multiples: [],
+      rawChoices: [],
+      done: false,
+      error: false,
+      saving: false,
+      deleting: false,
       deleteModal: false,
-      edittingQuestionID: null,
+      addingChoice: false,
       questionModal: false,
-      question: '',
-      questionIDToDelete: null,
+      updatingChoice: false,
+      questionMultiple: false,
+      confirmDeleteModal: false,
+      rawAddQuestionModal: false,
+      workingWithQuestion: false,
       multiplechoiceModal: false,
       rawMultiplechoiceModal: false,
-      choices: [],
-      rawChoices: [],
-      choice: '',
-      choiceID: null,
-      questionMultiple: false,
-      rawAddQuestionModal: false,
-      confirmDeleteModal: false,
-      confirmDeleteModalSecond: false,
-      error: false
+      confirmDeleteModalSecond: false
     }
   },
   computed: {
@@ -609,6 +644,7 @@ export default {
     },
     async editChoice() {
       if ((this.choice !== '') & (this.choiceID !== null)) {
+        this.updatingChoice = true
         await this.client
           .patch(
             `${this.multiplechoicesURL}${this.edittingQuestionID}/choices/${
@@ -624,9 +660,11 @@ export default {
           .catch(() => {
             this.exposeError()
           })
+          .finally(() => (this.updatingChoice = false))
       }
     },
     async deleteQuestion(id) {
+      this.workingWithQuestion = true
       await this.client
         .delete(`${this.questionsURL}${id}/`)
         .then(() => {
@@ -637,8 +675,10 @@ export default {
         .catch(() => {
           this.exposeError()
         })
+        .finally(() => (this.workingWithQuestion = false))
     },
     async deleteMultiple(id) {
+      this.workingWithQuestion = true
       await this.client
         .delete(`${this.multiplechoicesURL}${id}/`)
         .then(() => {
@@ -649,8 +689,10 @@ export default {
         .catch(() => {
           this.exposeError()
         })
+        .finally(() => (this.workingWithQuestion = false))
     },
     async deleteTopic() {
+      this.deleting = true
       await this.client
         .delete(this.topicURL)
         .then(() => {
@@ -659,8 +701,10 @@ export default {
         .catch(() => {
           this.exposeError()
         })
+        .finally(() => (this.deleting = false))
     },
     async save() {
+      this.saving = true
       await this.client
         .patch(this.topicURL, {
           title: this.title,
@@ -674,9 +718,11 @@ export default {
         .catch(() => {
           this.exposeError()
         })
+        .finally(() => (this.saving = false))
     },
     async editQuestion() {
       if (this.question !== '') {
+        this.workingWithQuestion = true
         await this.client
           .put(`${this.questionsURL}${this.edittingQuestionID}/`, {
             text: this.question,
@@ -690,10 +736,12 @@ export default {
           .catch(() => {
             this.exposeError()
           })
+          .finally(() => (this.workingWithQuestion = false))
       }
     },
     async editMultipleChoice() {
       if ((this.question !== '') & (this.choices.length > 1)) {
+        this.workingWithQuestion = true
         await this.client
           .patch(`${this.multiplechoicesURL}${this.edittingQuestionID}/`, {
             text: this.question,
@@ -710,6 +758,7 @@ export default {
           .catch(() => {
             this.exposeError()
           })
+          .finally(() => (this.workingWithQuestion = false))
       }
     },
     async getChoicesOfEdittingQuestion(id) {
@@ -746,6 +795,7 @@ export default {
     },
     async addChoice() {
       if (this.choice !== '') {
+        this.addingChoice = true
         await this.client
           .post(
             `${this.multiplechoicesURL}${this.edittingQuestionID}/choices/`,
@@ -768,13 +818,16 @@ export default {
               .catch(() => {
                 this.exposeError()
               })
+              .finally(() => (this.addingChoice = false))
           })
           .catch(() => {
             this.exposeError()
           })
+          .finally(() => (this.addingChoice = false))
       }
     },
     async addQuestion() {
+      this.workingWithQuestion = true
       if (this.question !== '') {
         await this.client
           .post(`${this.topicURL}questions/`, { text: this.question })
@@ -786,10 +839,12 @@ export default {
           .catch(() => {
             this.exposeError()
           })
+          .finally(() => (this.workingWithQuestion = false))
       }
     },
     async addRawMultipleChoice() {
       if ((this.question !== '') & (this.rawChoices.length > 1)) {
+        this.workingWithQuestion = true
         await this.client
           .post(`${this.topicURL}multiplechoices/`, {
             text: this.question,
@@ -815,6 +870,7 @@ export default {
           .catch(() => {
             this.exposeError()
           })
+          .finally(() => (this.workingWithQuestion = false))
       }
     },
     addRawChoice() {

@@ -32,7 +32,9 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn class="pink" @click="$emit('login-close')">Cancel</v-btn>
-            <v-btn class="green" @click="loginUser()">Login</v-btn>
+            <v-btn class="green" :loading="loggingIn" @click="loginUser()"
+              >Login</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -83,7 +85,8 @@ export default {
       username: '',
       password: '',
       loginError: false,
-      loginCorrect: false
+      loginCorrect: false,
+      loggingIn: false
     }
   },
   computed: {
@@ -97,6 +100,7 @@ export default {
   },
   methods: {
     async loginUser() {
+      this.loggingIn = true
       await axios
         .post('https://needyourhelp-api.herokuapp.com/token/', {
           username: this.username,
@@ -113,6 +117,7 @@ export default {
         .catch(() => {
           this.loginError = true
         })
+        .finally(() => (this.loggingIn = false))
     }
   }
 }

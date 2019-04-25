@@ -351,12 +351,12 @@ export default {
         {
           hid: 'twitter-preview_img',
           name: 'twitter:image',
-          content: '/images/hands.png'
+          content: 'https://needyourhelp.herokuapp.com/images/hands.png'
         },
         {
           hid: 'preview_img',
           property: 'og:image',
-          content: '/images/hands.png'
+          content: 'https://needyourhelp.herokuapp.com/images/hands.png'
         }
       ]
     }

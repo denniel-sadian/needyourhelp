@@ -59,7 +59,9 @@
       <v-flex xs12>
         <v-layout row wrap>
           <v-flex xs12>
-            <v-btn block class="green" round @click="save()">Next</v-btn>
+            <v-btn block class="green" round :loading="saving" @click="save()"
+              >Next</v-btn
+            >
           </v-flex>
         </v-layout>
       </v-flex>
@@ -91,7 +93,8 @@ export default {
       topicTitle: '',
       topicDesc: '',
       dateStarted: new Date().toISOString().substr(0, 10),
-      error: false
+      error: false,
+      saving: false
     }
   },
   computed: {
@@ -101,6 +104,7 @@ export default {
   },
   methods: {
     async save() {
+      this.saving = true
       if (
         (this.topicTitle !== '') &
         (this.topicDesc !== '') &
@@ -124,6 +128,7 @@ export default {
           .catch(() => {
             this.error = true
           })
+          .finally(() => (this.saving = false))
       }
     }
   },

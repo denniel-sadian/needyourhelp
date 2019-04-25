@@ -13,16 +13,37 @@
       <v-flex xs12>
         <v-container grid-list-xs class="purple darken-4" fluid pa-0>
           <v-container grid-list-xs pa-0>
-            <v-layout row wrap align-center>
-              <v-flex xs6>
-                <div class="text-xs-left pa-3 subheading">
+            <v-layout row wrap align-center py-2>
+              <v-flex xs12 md4 order-xs2 order-md1>
+                <div class="text-xs-center subheading">
                   &copy; {{ year }} Need Your Help
                 </div>
               </v-flex>
-              <v-flex xs6>
-                <div>
-                  <i class="fab fa-facebook-square"></i>
-                </div>
+              <v-flex class="text-xs-center" order-xs1 order-md2 xs12 md8>
+                <v-btn flat icon :href="shareTo('facebook')"
+                  ><v-icon>fab fa-facebook-square</v-icon></v-btn
+                >
+                <v-btn flat icon :href="shareTo('twitter')"
+                  ><v-icon>fab fa-twitter</v-icon></v-btn
+                >
+                <v-btn flat icon :href="shareTo('linkedin')"
+                  ><v-icon>fab fa-linkedin</v-icon></v-btn
+                >
+                <v-btn flat icon :href="shareTo('telegram')"
+                  ><v-icon>fab fa-telegram-plane</v-icon></v-btn
+                >
+                <v-btn flat icon :href="shareTo('whatsapp')"
+                  ><v-icon>fab fa-whatsapp-square</v-icon></v-btn
+                >
+                <v-btn flat icon :href="shareTo('pinterest')"
+                  ><v-icon>fab fa-pinterest</v-icon></v-btn
+                >
+                <v-btn flat icon :href="shareTo('reddit')"
+                  ><v-icon>fab fa-reddit-alien</v-icon></v-btn
+                >
+                <v-btn flat icon :href="shareTo('mail')"
+                  ><v-icon>fas fa-envelope</v-icon></v-btn
+                >
               </v-flex>
             </v-layout>
           </v-container>
@@ -63,7 +84,7 @@ export default {
       return new Date().getFullYear()
     },
     shareLink() {
-      return `https://www.needyourhelp.herokuapp.com${this.$route.path}`
+      return `https://needyourhelp.herokuapp.com${this.$route.path}`
     }
   },
   mounted() {
@@ -72,6 +93,28 @@ export default {
       .then(res => {
         this.q = res.data
       })
+  },
+  methods: {
+    shareTo(sm) {
+      if (sm === 'facebook')
+        return `https://web.facebook.com/sharer/sharer.php?u=${this.shareLink}`
+      else if (sm === 'twitter')
+        return `https://www.twitter.com/share?url=${this.shareLink}`
+      else if (sm === 'linkedin')
+        return `https://www.linkedin.com/shareArticle/?mini=true&url=${
+          this.shareLink
+        }`
+      else if (sm === 'telegram')
+        return `https://telegram.me/share/?url=${this.shareLink}`
+      else if (sm === 'whatsapp')
+        return `https://api.whatsapp.com/send?text=${this.shareLink}`
+      else if (sm === 'pinterest')
+        return `https://www.pinterest.ph/pin/find/?url=${this.shareLink}`
+      else if (sm === 'reddit')
+        return `https://reddit.com/submit?url=${this.shareLink}`
+      else if (sm === 'mail')
+        return `mailto:?subject=Survey&body=${this.shareLink}`
+    }
   }
 }
 </script>

@@ -65,7 +65,9 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn class="pink" @click="$emit('register-close')">Cancel</v-btn>
-            <v-btn class="green" @click="registerUser()">Register</v-btn>
+            <v-btn class="green" :loading="registering" @click="registerUser()"
+              >Register</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -163,7 +165,8 @@ export default {
       notComplete: false,
       usernameInvalid: false,
       error: false,
-      loginCorrect: false
+      loginCorrect: false,
+      registering: false
     }
   },
   computed: {
@@ -180,6 +183,7 @@ export default {
       this.username = this.username.toLowerCase()
     },
     async registerUser() {
+      this.registering = true
       if (
         (this.username !== '') &
         (this.firstName !== '') &
@@ -213,9 +217,19 @@ export default {
                   .catch(() => {
                     this.error = true
                   })
+                  .finally(() => (this.registering = false))
               })
               .catch(() => {
                 this.error = true
+              })
+              .finally(() => {
+                this.registering = false
+                this.username = ''
+                this.password = ''
+                this.email = ''
+                this.firstName = ''
+                this.lastName = ''
+                this.passwordAgain = ''
               })
           } else this.passwordNotMatch = true
         } else this.usernameInvalid = true
