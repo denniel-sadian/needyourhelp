@@ -74,7 +74,7 @@
                   userFullName
                 }}</v-list-tile-title>
                 <v-list-tile-title v-else class="title"
-                  >Application Drawer</v-list-tile-title
+                  >Application's Drawer</v-list-tile-title
                 >
               </v-list-tile-content>
             </v-list-tile>
