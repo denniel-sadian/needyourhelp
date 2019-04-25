@@ -31,7 +31,7 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/images/logo.png' },
-      { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' },
+      { rel: 'stylesheet', href: '/css/all.css' },
       {
         rel: 'stylesheet',
         href:

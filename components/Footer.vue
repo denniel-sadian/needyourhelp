@@ -1,9 +1,6 @@
 <template>
   <v-footer id="footer" height="auto" mt-5>
     <v-layout row wrap text-xs-center>
-      <v-flex xs12>
-        <div></div>
-      </v-flex>
       <v-flex xs12 pt-4>
         <v-container>
           <div class="title">{{ day }} quote</div>
@@ -16,10 +13,18 @@
       <v-flex xs12>
         <v-container grid-list-xs class="purple darken-4" fluid pa-0>
           <v-container grid-list-xs pa-0>
-            <div class="text-xs-left pa-3 subheading">
-              &copy; {{ year }} Need Your Help
-            </div>
-            <div class="sharethis-inline-share-buttons"></div>
+            <v-layout row wrap align-center>
+              <v-flex xs6>
+                <div class="text-xs-left pa-3 subheading">
+                  &copy; {{ year }} Need Your Help
+                </div>
+              </v-flex>
+              <v-flex xs6>
+                <div>
+                  <i class="fab fa-facebook-square"></i>
+                </div>
+              </v-flex>
+            </v-layout>
           </v-container>
         </v-container>
       </v-flex>
@@ -57,7 +62,7 @@ export default {
     year() {
       return new Date().getFullYear()
     },
-    facebookShareLink() {
+    shareLink() {
       return `https://www.needyourhelp.herokuapp.com${this.$route.path}`
     }
   },
