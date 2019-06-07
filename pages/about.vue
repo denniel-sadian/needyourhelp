@@ -20,7 +20,7 @@
       <v-flex md8>
         <p class="headline">
           This website is an art of
-          <a href="https://sadian.herokuapp.com/about" class="yellow--text"
+          <a href="https://sadian.herokuapp.com/portfolio/about" class="yellow--text"
             >Denniel Luis Saway Sadian</a
           >. He got inspired to develop this web application by the continues
           survey works in senior high school. This is his way of helping his
