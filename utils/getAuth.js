@@ -3,19 +3,18 @@
 import axios from 'axios'
 
 export default async store => {
-  
   let error = false
-  
+
   if (localStorage.getItem('needyourhelp_access') !== null) {
     store.commit('SET_TOKEN', localStorage.getItem('needyourhelp_access'))
-    
+
     const client = axios.create({
       baseURL: 'https://needyourhelp-api.herokuapp.com/',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('needyourhelp_access')}`
       }
     })
-    
+
     await client
       .get('auth/me/')
       .then(res => {
@@ -26,6 +25,6 @@ export default async store => {
         error = true
       })
   }
-  
+
   if (error) return false
 }
