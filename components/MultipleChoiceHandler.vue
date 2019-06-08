@@ -6,39 +6,31 @@
           {{ question.text }}
         </div>
         <div v-show="question.multiple" class="grey--text caption">
-          You can choose all the applies.
+          You can choose all that applies.
         </div>
       </v-flex>
-      <v-flex mt-2>
+      <v-flex>
         <v-container py-0>
           <v-layout column>
-            <v-flex v-if="question.multiple" d-flex>
-              <v-layout row wrap>
-                <v-flex
-                  v-for="c in question.choices"
-                  :key="c.id"
-                  d-flex
-                  md4
-                  sm4
-                  xs6
-                >
-                  <v-checkbox
-                    v-model="chosenChoices"
-                    hide-details
-                    :label="c.text"
-                    :value="c.id"
-                  ></v-checkbox>
-                </v-flex>
-              </v-layout>
+            <v-flex v-if="question.multiple">
+              <v-checkbox
+                v-for="c in question.choices"
+                :key="c.id"
+                v-model="chosenChoices"
+                hide-details
+                :label="c.text"
+                :value="c.id"
+                color="green"
+              ></v-checkbox>
             </v-flex>
             <v-flex v-else>
-              <v-radio-group v-model="chosenOne" row>
+              <v-radio-group v-model="chosenOne">
                 <v-radio
                   v-for="c in question.choices"
                   :key="c.id"
                   :label="c.text"
                   :value="c.id"
-                  md4
+                  color="green"
                   d-flex
                 ></v-radio>
               </v-radio-group>
@@ -126,7 +118,7 @@ export default {
   },
   methods: {
     buildChooseUrl(choiceID) {
-      return `http://127.0.0.1:8000/topics/${
+      return `https://needyourhelp-api.herokuapp.com/topics/${
         this.question.topic
       }/multiplechoices/${this.question.id}/choices/${choiceID}/choose/`
     }

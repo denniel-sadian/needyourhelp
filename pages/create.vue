@@ -59,30 +59,24 @@
       <v-flex xs12>
         <v-layout row wrap>
           <v-flex xs12>
-            <v-btn block class="green" round :loading="saving" @click="save()"
+            <v-btn
+              block
+              class="green"
+              round
+              :loading="saving"
+              :disabled="disabled"
+              @click="save()"
               >Next</v-btn
             >
           </v-flex>
         </v-layout>
       </v-flex>
     </v-layout>
-    <v-snackbar
-      v-model="error"
-      :timeout="5000"
-      color="orange"
-      top
-      multi-line
-      class="subheading"
-    >
-      Oh, that's unfortunate. Your session has expired. Please login again.
-      <v-btn fab flat @click="error = false">
-        <v-icon>check_circle</v-icon>
-      </v-btn>
-    </v-snackbar>
   </v-container>
 </template>
 
 <script>
+import getAuth from '~/utils/getAuth.js'
 import axios from 'axios'
 
 export default {
@@ -93,8 +87,8 @@ export default {
       topicTitle: '',
       topicDesc: '',
       dateStarted: new Date().toISOString().substr(0, 10),
-      error: false,
-      saving: false
+      saving: false,
+      disabled: true
     }
   },
   computed: {
@@ -102,16 +96,30 @@ export default {
       return this.$store.getters.token
     }
   },
+  watch: {
+    topicTitle() {
+      this.changeNextSate()
+    },
+    topicDesc() {
+      this.changeNextSate()
+    }
+  },
   methods: {
+    changeNextSate() {
+      if (this.topicTitle !== '' && this.topicDesc !== '') {
+        this.disabled = false
+      } else this.disabled = true
+    },
     async save() {
       this.saving = true
+      this.disabled = true
       if (
         (this.topicTitle !== '') &
         (this.topicDesc !== '') &
         (this.dateStarted !== '')
       ) {
         const client = axios.create({
-          baseURL: 'http://127.0.0.1:8000/',
+          baseURL: 'https://needyourhelp-api.herokuapp.com/',
           headers: {
             Authorization: `Bearer ${this.token}`
           }
@@ -125,8 +133,8 @@ export default {
           .then(res => {
             this.$router.push(`/edit/${res.data.id}`)
           })
-          .catch(() => {
-            this.error = true
+          .catch(async () => {
+            await getAuth(this.$store)
           })
           .finally(() => (this.saving = false))
       }

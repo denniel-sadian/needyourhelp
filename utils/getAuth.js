@@ -3,13 +3,12 @@
 import axios from 'axios'
 
 export default async store => {
-  let error = false
-
   if (localStorage.getItem('needyourhelp_access') !== null) {
     store.commit('SET_TOKEN', localStorage.getItem('needyourhelp_access'))
+    store.commit('SET_EXPIRED', false)
 
     const client = axios.create({
-      baseURL: 'http://127.0.0.1:8000/',
+      baseURL: 'https://needyourhelp-api.herokuapp.com/',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('needyourhelp_access')}`
       }
@@ -21,10 +20,9 @@ export default async store => {
         store.commit('SET_AUTH', res.data)
       })
       .catch(() => {
+        localStorage.removeItem('needyourhelp_access')
         store.commit('SET_AUTH', {})
-        error = true
+        store.commit('SET_EXPIRED', true)
       })
   }
-
-  if (error) return false
 }

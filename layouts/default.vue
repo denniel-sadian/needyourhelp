@@ -160,7 +160,7 @@
         class="subheading"
       >
         Oh, that's unfortunate. Your session has expired. Please login again.
-        <v-btn fab flat @click="expired = false">
+        <v-btn fab flat @click="$store.commit('SET_EXPIRED', false)">
           <v-icon>check_circle</v-icon>
         </v-btn>
       </v-snackbar>
@@ -187,8 +187,7 @@ export default {
     return {
       showNav: false,
       showLogin: false,
-      showRegister: false,
-      expired: false
+      showRegister: false
     }
   },
   computed: {
@@ -198,10 +197,13 @@ export default {
           this.$store.getters.auth.last_name
         }`
       } else return false
+    },
+    expired() {
+      return this.$store.getters.expired
     }
   },
   async mounted() {
-    this.expired = (await getAuth(this.$store)) === false
+    await getAuth(this.$store)
   },
   methods: {
     logout() {

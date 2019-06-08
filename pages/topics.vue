@@ -233,6 +233,9 @@ export default {
     }
   },
   watch: {
+    username(v) {
+      if (v) this.selectedFilter = 'My topics'
+    },
     page(v) {
       const q = { page: v, filter: this.selectedFilter }
       if (this.search) q.search = this.search
@@ -277,10 +280,13 @@ export default {
     async respond(id) {
       if (this.username) {
         await axios
-          .post(`http://127.0.0.1:8000/topics/${id}/responded/`, {
-            firstname: this.firstname,
-            lastname: this.lastname
-          })
+          .post(
+            `https://needyourhelp-api.herokuapp.com/topics/${id}/responded/`,
+            {
+              firstname: this.firstname,
+              lastname: this.lastname
+            }
+          )
           .then(res => {
             if (res.data.responded) this.respondedAlready = true
             else this.$router.push(`/respond/${id}/`)

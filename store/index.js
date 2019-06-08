@@ -7,7 +7,8 @@ export const state = () => ({
   verifiedQuestions: 0,
   submitted: 0,
   toSubmit: [],
-  preparedQuestions: 0
+  preparedQuestions: 0,
+  expired: false
 })
 
 export const mutations = {
@@ -19,6 +20,9 @@ export const mutations = {
   },
   SET_TOKEN(state, token) {
     state.token = token
+  },
+  SET_EXPIRED(state, boolean) {
+    state.expired = boolean
   },
   INCREMENT_VERIFIED_QUESTIONS(state) {
     state.verifiedQuestions++
@@ -50,9 +54,11 @@ export const actions = {
     await dispatch('getTopics')
   },
   async getTopics({ commit }) {
-    await axios.get('http://127.0.0.1:8000/topics/').then(res => {
-      commit('SET_TOPICS', res.data)
-    })
+    await axios
+      .get('https://needyourhelp-api.herokuapp.com/topics/')
+      .then(res => {
+        commit('SET_TOPICS', res.data)
+      })
   }
 }
 
@@ -62,6 +68,9 @@ export const getters = {
   },
   auth: state => {
     return state.auth
+  },
+  expired: state => {
+    return state.expired
   },
   topicsCount: state => {
     return state.topics.length

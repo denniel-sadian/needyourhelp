@@ -6,6 +6,10 @@
       {{ (topic.owner_firstname + ' ' + topic.owner_lastname).toUpperCase() }}
     </div>
     <div class="subheading mt-3 text-xs-center">{{ topic.description }}</div>
+    <div class="subheading mt-3 text-xs-center">
+      This topic was created on
+      {{ new Date(topic.date_started).toDateString() }}.
+    </div>
 
     <v-layout row wrap mt-5>
       <v-flex xs12>
@@ -137,10 +141,18 @@ export default {
       topic: {}
     }
   },
+  computed: {
+    title() {
+      return `Results - ${this.topic.title}`
+    },
+    headDesc() {
+      return this.topic.description
+    }
+  },
   async asyncData({ params, store }) {
     let data
     const config = {
-      baseURL: 'http://127.0.0.1:8000/'
+      baseURL: 'https://needyourhelp-api.herokuapp.com/'
     }
     if (store.getters.token) {
       config.headers = {
@@ -156,6 +168,38 @@ export default {
       }
     })
     return data
+  },
+  head() {
+    return {
+      title: this.title,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.headDesc
+        },
+        {
+          hid: 'twitter-title',
+          name: 'twitter:title',
+          content: this.title
+        },
+        {
+          hid: 'twitter-desc',
+          name: 'twitter:description',
+          content: this.headDesc
+        },
+        {
+          hid: 'twitter-preview_img',
+          name: 'twitter:image',
+          content: 'https://needyourhelp.herokuapp.com/images/hands.png'
+        },
+        {
+          hid: 'preview_img',
+          property: 'og:image',
+          content: 'https://needyourhelp.herokuapp.com/images/hands.png'
+        }
+      ]
+    }
   }
 }
 </script>

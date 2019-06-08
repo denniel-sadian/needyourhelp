@@ -61,7 +61,7 @@
       multi-line
       class="subheading"
     >
-      Welcome to Need Your Help, {{ userFullName }}!
+      Welcome to Need Your Help!
       <v-btn fab flat @click="loginCorrect = false">
         <v-icon>check_circle</v-icon>
       </v-btn>
@@ -102,7 +102,7 @@ export default {
     async loginUser() {
       this.loggingIn = true
       await axios
-        .post('http://127.0.0.1:8000/token/', {
+        .post('https://needyourhelp-api.herokuapp.com/token/', {
           username: this.username,
           password: this.password
         })

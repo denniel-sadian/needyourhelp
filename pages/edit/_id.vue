@@ -2,7 +2,23 @@
   <v-container grid-list-xs mt-5>
     <v-layout row wrap>
       <v-flex xs12>
-        <div class="title">Edit topic</div>
+        <div class="title pb-3">Edit topic</div>
+        <v-alert :value="true" type="info" class="subheading">
+          If this is your first time editing this topic, then you're fine to go.
+          If not, then be sure that you haven't yet started the promotion of
+          this topic's survey, because the validity of results might not be
+          accurate. If you're only editing this topic for correcting some
+          mistakes in grammar, pucntuation or spelling, then it's fine. But
+          adding some questions or choices while some of your respondents have
+          already responded, is prohibited for making sure that the survey will
+          produce accurate results.
+        </v-alert>
+        <v-alert :value="true" type="info" class="subheading">
+          Also, if you press the big green "Save" button, it only applies for
+          saving the topic's title, date, status, and description in the
+          database. Further editing of the questions are already saved in the
+          database. So be careful.
+        </v-alert>
       </v-flex>
       <v-flex d-flex xs12 pt-5>
         <v-text-field
@@ -157,7 +173,13 @@
             </div>
           </v-flex>
           <v-flex xs12 md6 mt-3 pa-2>
-            <v-btn block class="green" round :loading="saving" @click="save()"
+            <v-btn
+              block
+              class="green"
+              round
+              :loading="saving"
+              :disabled="disabled"
+              @click="save()"
               >Save</v-btn
             >
           </v-flex>
@@ -185,7 +207,12 @@
             <v-btn color="pink" flat @click="deleteModal = !deleteModal"
               >Nope</v-btn
             >
-            <v-btn color="green" flat :loading="deleting" @click="deleteTopic()"
+            <v-btn
+              color="green"
+              flat
+              :loading="deleting"
+              :disabled="disabled"
+              @click="deleteTopic()"
               >Yes</v-btn
             >
           </v-card-actions>
@@ -498,6 +525,7 @@
 </template>
 
 <script>
+import getAuth from '~/utils/getAuth.js'
 import axios from 'axios'
 
 export default {
@@ -511,6 +539,7 @@ export default {
       id: null,
       date: null,
       choiceID: null,
+      disabled: false,
       questionIDToDelete: null,
       edittingQuestionID: null,
       desc: '',
@@ -535,7 +564,8 @@ export default {
       workingWithQuestion: false,
       multiplechoiceModal: false,
       rawMultiplechoiceModal: false,
-      confirmDeleteModalSecond: false
+      confirmDeleteModalSecond: false,
+      alert: true
     }
   },
   computed: {
@@ -544,7 +574,7 @@ export default {
     },
     client() {
       const client = axios.create({
-        baseURL: 'http://127.0.0.1:8000/',
+        baseURL: 'https://needyourhelp-api.herokuapp.com/',
         headers: {
           Authorization: `Bearer ${this.token}`
         }
@@ -568,7 +598,7 @@ export default {
     }
   },
   async asyncData({ params }) {
-    const root = `http://127.0.0.1:8000/topics/${params.id}/`
+    const root = `https://needyourhelp-api.herokuapp.com/topics/${params.id}/`
     const data = {}
     await axios
       .get(root)
@@ -693,6 +723,7 @@ export default {
     },
     async deleteTopic() {
       this.deleting = true
+      this.disabled = true
       await this.client
         .delete(this.topicURL)
         .then(() => {
@@ -704,21 +735,24 @@ export default {
         .finally(() => (this.deleting = false))
     },
     async save() {
-      this.saving = true
-      await this.client
-        .patch(this.topicURL, {
-          title: this.title,
-          description: this.desc,
-          date_started: this.date,
-          done: this.done
-        })
-        .then(() => {
-          this.$router.push('/topics')
-        })
-        .catch(() => {
-          this.exposeError()
-        })
-        .finally(() => (this.saving = false))
+      if (this.title && this.date && this.desc) {
+        this.saving = true
+        this.disabled = true
+        await this.client
+          .patch(this.topicURL, {
+            title: this.title,
+            description: this.desc,
+            date_started: this.date,
+            done: this.done
+          })
+          .then(() => {
+            this.$router.push('/topics')
+          })
+          .catch(() => {
+            this.exposeError()
+          })
+          .finally(() => (this.saving = false))
+      }
     },
     async editQuestion() {
       if (this.question !== '') {
@@ -885,10 +919,9 @@ export default {
       this.rawChoices.splice(this.rawChoices.indexOf(c), 1)
       this.rawChoices = [...this.rawChoices]
     },
-    exposeError() {
+    async exposeError() {
       this.error = true
-      this.$store.commit('SET_TOKEN', '')
-      this.$store.commit('SET_AUTH', {})
+      await getAuth(this.$store)
     }
   },
   head() {

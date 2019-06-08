@@ -126,10 +126,10 @@
           <nuxt-link to="/topics" class="subheading yellow--text"
             >Topics</nuxt-link
           >
-          page. This website lets you build a question that has two kinds of
-          questions. One that can be answered by pure opinions of the
-          respondents, good for qualitative research. And the other one that has
-          multiple choices, which is good for quantitative research.
+          page. This website lets you build a question sheet that has two kinds
+          of questions. One that can be answered by pure opinions of the
+          respondents -- good for qualitative research. And the other one that
+          has multiple choices, which is good for quantitative research.
         </v-flex>
       </v-layout>
       <v-layout row align-center justify-center wrap text-xs-center pt-5>
