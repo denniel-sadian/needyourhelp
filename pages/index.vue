@@ -207,7 +207,7 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: 'A friendly online-test website.'
+          content: 'Welcome, to a friendly online-test website!'
         },
         {
           hid: 'twitter-title',
@@ -217,12 +217,7 @@ export default {
         {
           hid: 'twitter-desc',
           name: 'twitter:description',
-          content: 'A friendly online-test website.'
-        },
-        {
-          hid: 'url',
-          property: 'og:url',
-          content: 'https://www.needyourhelp.herokuapp.com'
+          content: 'Welcome, to a friendly online-test website!'
         }
       ]
     }
