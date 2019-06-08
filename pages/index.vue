@@ -223,16 +223,6 @@ export default {
           hid: 'url',
           property: 'og:url',
           content: 'https://www.needyourhelp.herokuapp.com'
-        },
-        {
-          hid: 'og-title',
-          property: 'og:title',
-          content: 'Need Your Help'
-        },
-        {
-          hid: 'og-desc',
-          property: 'og:description',
-          content: 'A friendly online-test website.'
         }
       ]
     }
