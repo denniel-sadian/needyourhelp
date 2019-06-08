@@ -46,9 +46,9 @@ export default {
   },
   computed: {
     respondLink() {
-      return `https://needyourhelp-api.herokuapp.com/topics/${
-        this.question.topic
-      }/questions/${this.question.id}/respond/`
+      return `http://127.0.0.1:8000/topics/${this.question.topic}/questions/${
+        this.question.id
+      }/respond/`
     }
   },
   watch: {

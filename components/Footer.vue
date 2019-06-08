@@ -4,7 +4,8 @@
       <v-flex xs12 pt-4>
         <v-container>
           <div class="title">{{ day }} quote</div>
-          <h1 class="display-2 my-3">"{{ quote }}"</h1>
+          <h1 v-if="quote" class="display-2 my-3">"{{ quote }}"</h1>
+          <h1 v-else class="display-2 my-3">Loading...</h1>
           <div>
             - <span class="subheading">{{ whose }}</span>
           </div>
