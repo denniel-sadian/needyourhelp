@@ -359,6 +359,21 @@ export default {
           hid: 'preview_img',
           property: 'og:image',
           content: 'https://needyourhelp.herokuapp.com/images/hands.png'
+        },
+        {
+          hid: 'site_url',
+          property: 'og:url',
+          content: `https://needyourhelp.herokuapp.com/respond/${this.id}`
+        },
+        {
+          hid: 'site_title',
+          property: 'og:title',
+          content: this.title
+        },
+        {
+          hid: 'site_description',
+          property: 'og:description',
+          content: this.headDesc
         }
       ]
     }

@@ -15,14 +15,27 @@
       </v-flex>
       <v-flex xs12>
         <v-container grid-list-xs class="purple darken-4" fluid pa-0>
-          <v-container grid-list-xs pa-0>
-            <v-layout row wrap align-center py-2>
-              <v-flex xs12 md4 order-xs2 order-md1>
-                <div class="text-xs-center subheading">
+          <v-container grid-list-xs pa-2>
+            <v-layout row wrap align-center pa-2>
+              <v-flex xs6 md2 order-xs2 order-md1>
+                <div class="text-xs-left text-md-left subheading">
                   &copy; {{ year }} Need Your Help
                 </div>
               </v-flex>
-              <v-flex class="text-xs-center" order-xs1 order-md2 xs12 md8>
+              <v-flex xs6 md2 order-xs2 order-md1>
+                <div class="text-xs-right text-md-left subheading">
+                  <nuxt-link to="/privacy-policy" class="subheading white--text"
+                    >Privacy Policy</nuxt-link
+                  >
+                </div>
+              </v-flex>
+              <v-flex
+                class="text-md-right text-md-right"
+                order-xs1
+                order-md2
+                xs12
+                md8
+              >
                 <v-btn flat icon :href="shareTo('facebook')"
                   ><v-icon>fab fa-facebook-square</v-icon></v-btn
                 >

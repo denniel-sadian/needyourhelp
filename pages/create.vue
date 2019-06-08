@@ -158,6 +158,21 @@ export default {
           hid: 'twitter-desc',
           name: 'twitter:description',
           content: 'Create your topic to this page.'
+        },
+        {
+          hid: 'site_url',
+          property: 'og:url',
+          content: 'https://needyourhelp.herokuapp.com/create'
+        },
+        {
+          hid: 'site_title',
+          property: 'og:title',
+          content: 'Need Your Help - Create'
+        },
+        {
+          hid: 'site_description',
+          property: 'og:description',
+          content: 'Create your topic to this page.'
         }
       ]
     }

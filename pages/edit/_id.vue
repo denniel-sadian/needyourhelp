@@ -942,6 +942,21 @@ export default {
           hid: 'twitter-desc',
           name: 'twitter:description',
           content: 'Edit a topic in this page.'
+        },
+        {
+          hid: 'site_url',
+          property: 'og:url',
+          content: `https://needyourhelp.herokuapp.com/edit/${this.id}`
+        },
+        {
+          hid: 'site_title',
+          property: 'og:title',
+          content: this.title + ' - Editing'
+        },
+        {
+          hid: 'site_description',
+          property: 'og:description',
+          content: 'Edit a topic in this page.'
         }
       ]
     }

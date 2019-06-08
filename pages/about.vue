@@ -82,6 +82,21 @@ export default {
           hid: 'twitter-desc',
           name: 'twitter:description',
           content: this.firstDesc
+        },
+        {
+          hid: 'site_url',
+          property: 'og:url',
+          content: 'https://needyourhelp.herokuapp.com/about'
+        },
+        {
+          hid: 'site_title',
+          property: 'og:title',
+          content: 'Need Your Help - About'
+        },
+        {
+          hid: 'site_description',
+          property: 'og:description',
+          content: this.firstDesc
         }
       ]
     }

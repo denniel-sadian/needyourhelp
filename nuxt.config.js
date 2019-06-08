@@ -28,6 +28,26 @@ export default {
         hid: 'website_type',
         property: 'og:type',
         content: 'website'
+      },
+      {
+        hid: 'site_url',
+        property: 'og:url',
+        content: 'https://needyourhelp.herokuapp.com'
+      },
+      {
+        hid: 'site_title',
+        property: 'og:title',
+        content: 'Need Your Help'
+      },
+      {
+        hid: 'site_description',
+        property: 'og:description',
+        content: 'Welcome, to a friendly online-test website!'
+      },
+      {
+        hid: 'fb_app_id',
+        property: 'fb:app_id',
+        content: '349369982430993'
       }
     ],
     link: [
