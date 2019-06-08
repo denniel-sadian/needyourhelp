@@ -31,8 +31,10 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn class="pink" @click="$emit('login-close')">Cancel</v-btn>
-            <v-btn class="green" :loading="loggingIn" @click="loginUser()"
+            <v-btn color="pink" flat @click="$emit('login-close')"
+              >Cancel</v-btn
+            >
+            <v-btn color="green" flat :loading="loggingIn" @click="loginUser()"
               >Login</v-btn
             >
           </v-card-actions>

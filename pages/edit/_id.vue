@@ -304,12 +304,12 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn round class="pink" @click="questionModal = false"
+            <v-btn flat color="pink" @click="questionModal = false"
               >Cancel</v-btn
             >
             <v-btn
-              round
-              class="green"
+              flat
+              color="green"
               :loading="workingWithQuestion"
               @click="editQuestion()"
               >Update</v-btn
@@ -354,14 +354,6 @@
                   @keyup.enter="addChoice()"
                 ></v-text-field>
               </v-flex>
-              <v-flex xs12 text-xs-center>
-                <v-btn outline :loading="addingChoice" @click="addChoice()"
-                  >Add Choice</v-btn
-                >
-                <v-btn outline :loading="updatingChoice" @click="editChoice()"
-                  >Update Choice</v-btn
-                >
-              </v-flex>
               <v-flex xs12>
                 <div class="text-xs-center">
                   <v-chip
@@ -374,16 +366,24 @@
                   >
                 </div>
               </v-flex>
+              <v-flex xs12 text-xs-center>
+                <v-btn outline :loading="addingChoice" @click="addChoice()"
+                  >Add</v-btn
+                >
+                <v-btn outline :loading="updatingChoice" @click="editChoice()"
+                  >Update</v-btn
+                >
+              </v-flex>
             </v-layout>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn round class="pink" @click="multiplechoiceModal = false"
+            <v-btn flat color="pink" @click="multiplechoiceModal = false"
               >Cancel</v-btn
             >
             <v-btn
-              round
-              class="green"
+              flat
+              color="green"
               :loading="workingWithQuestion"
               @click="editMultipleChoice()"
               >Update</v-btn
@@ -416,12 +416,12 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn round class="pink" @click="rawAddQuestionModal = false"
+            <v-btn flat color="pink" @click="rawAddQuestionModal = false"
               >Cancel</v-btn
             >
             <v-btn
-              round
-              class="green"
+              color="green"
+              flat
               :loading="workingWithQuestion"
               @click="addQuestion()"
               >Add</v-btn
@@ -467,7 +467,7 @@
                   @keyup.enter="addRawChoice()"
                 ></v-text-field>
               </v-flex>
-              <v-flex xs8>
+              <v-flex xs12>
                 <div class="text-xs-center">
                   <v-chip
                     v-for="c in rawChoices"
@@ -478,19 +478,19 @@
                   >
                 </div>
               </v-flex>
-              <v-flex xs4 text-xs-right>
-                <v-btn outline @click="addRawChoice()">Add Choice</v-btn>
+              <v-flex xs12>
+                <v-btn outline block @click="addRawChoice()">Add Choice</v-btn>
               </v-flex>
             </v-layout>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn round class="pink" @click="rawMultiplechoiceModal = false"
+            <v-btn flat color="pink" @click="rawMultiplechoiceModal = false"
               >Cancel</v-btn
             >
             <v-btn
-              round
-              class="green"
+              flat
+              color="green"
               :loading="workingWithQuestion"
               @click="addRawMultipleChoice()"
               >Add</v-btn

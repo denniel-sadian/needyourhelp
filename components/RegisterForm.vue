@@ -64,8 +64,14 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn class="pink" @click="$emit('register-close')">Cancel</v-btn>
-            <v-btn class="green" :loading="registering" @click="registerUser()"
+            <v-btn color="pink" flat @click="$emit('register-close')"
+              >Cancel</v-btn
+            >
+            <v-btn
+              color="green"
+              flat
+              :loading="registering"
+              @click="registerUser()"
               >Register</v-btn
             >
           </v-card-actions>
