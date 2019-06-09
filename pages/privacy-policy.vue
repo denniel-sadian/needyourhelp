@@ -1,8 +1,17 @@
 <template>
-  <v-container>
-    <h1>Privacy Policy</h1>
+  <v-container class="subheading">
+    <div
+      class="display-4 text-xs-center font-weight-black hidden-xs-only hidden-sm-only mb-5"
+    >
+      Privacy Policy
+    </div>
+    <div
+      class="display-3 text-xs-center font-weight-black hidden-md-and-up mb-5"
+    >
+      Privacy Policy
+    </div>
 
-    <p>Effective date: June 08, 2019</p>
+    <p class="text-xs-center">Effective date: June 08, 2019</p>
 
     <p>
       <b>Need Your Help</b> operates the
@@ -25,17 +34,17 @@
       you agree to the collection and use of information in accordance with this
       policy. Unless otherwise defined in this Privacy Policy, terms used in
       this Privacy Policy have the same meanings as in our Terms and Conditions,
-      accessible from https://sadian.herokuapp.com
+      accessible from https://needyourhelp.herokuapp.com
     </p>
 
-    <h2>Information Collection And Use</h2>
+    <h2 class="display-2 mt-4">Information Collection And Use</h2>
 
     <p>
       We collect several different types of information for various purposes to
       provide and improve our Service to you.
     </p>
 
-    <h3>Types of Data Collected</h3>
+    <h3 class="display-1 mt-3">Types of Data Collected</h3>
 
     <h4>Personal Data</h4>
 
@@ -62,7 +71,7 @@
       identifiers and other diagnostic data.
     </p>
 
-    <h4>Tracking & Cookies Data</h4>
+    <h4>Tracking and Cookies Data</h4>
     <p>
       We use cookies and similar tracking technologies to track the activity on
       our Service and hold certain information.
@@ -95,7 +104,7 @@
       </li>
     </ul>
 
-    <h2>Use of Data</h2>
+    <h2 class="display-2 mt-4">Use of Data</h2>
 
     <p>Need Your Help uses the collected data for various purposes:</p>
     <ul>
@@ -114,7 +123,7 @@
       <li>To detect, prevent and address technical issues</li>
     </ul>
 
-    <h2>Transfer Of Data</h2>
+    <h2 class="display-2 mt-4">Transfer Of Data</h2>
     <p>
       Your information, including Personal Data, may be transferred to — and
       maintained on — computers located outside of your state, province, country
@@ -138,9 +147,9 @@
       security of your data and other personal information.
     </p>
 
-    <h2>Disclosure Of Data</h2>
+    <h2 class="display-2 mt-4">Disclosure Of Data</h2>
 
-    <h3>Legal Requirements</h3>
+    <h3 class="display-1 mt-3">Legal Requirements</h3>
     <p>
       Need Your Help may disclose your Personal Data in the good faith belief
       that such action is necessary to:
@@ -158,7 +167,7 @@
       <li>To protect against legal liability</li>
     </ul>
 
-    <h2>Security Of Data</h2>
+    <h2 class="display-2 mt-4">Security Of Data</h2>
     <p>
       The security of your data is important to us, but remember that no method
       of transmission over the Internet, or method of electronic storage is 100%
@@ -166,7 +175,7 @@
       your Personal Data, we cannot guarantee its absolute security.
     </p>
 
-    <h2>Service Providers</h2>
+    <h2 class="display-2 mt-4">Service Providers</h2>
     <p>
       We may employ third party companies and individuals to facilitate our
       Service ("Service Providers"), to provide the Service on our behalf, to
@@ -179,7 +188,7 @@
       any other purpose.
     </p>
 
-    <h2>Links To Other Sites</h2>
+    <h2 class="display-2 mt-4">Links To Other Sites</h2>
     <p>
       Our Service may contain links to other sites that are not operated by us.
       If you click on a third party link, you will be directed to that third
@@ -191,7 +200,7 @@
       privacy policies or practices of any third party sites or services.
     </p>
 
-    <h2>Children's Privacy</h2>
+    <h2 class="display-2 mt-4">Children's Privacy</h2>
     <p>Our Service does not address anyone under the age of 18 ("Children").</p>
     <p>
       We do not knowingly collect personally identifiable information from
@@ -202,7 +211,7 @@
       that information from our servers.
     </p>
 
-    <h2>Changes To This Privacy Policy</h2>
+    <h2 class="display-2 mt-4">Changes To This Privacy Policy</h2>
     <p>
       We may update our Privacy Policy from time to time. We will notify you of
       any changes by posting the new Privacy Policy on this page.
@@ -218,7 +227,7 @@
       on this page.
     </p>
 
-    <h2>Contact Us</h2>
+    <h2 class="display-2 mt-4">Contact Us</h2>
     <p>
       If you have any questions about this Privacy Policy, please contact us:
     </p>

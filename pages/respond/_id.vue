@@ -10,8 +10,8 @@
         <span v-else-if="(firstname === '') | (lastname === '')"
           >respondent</span
         >
-        <span v-else>{{ firstname + ' ' + lastname }}</span
-        >!
+        <span v-else>{{ firstname + ' ' + lastname }}</span>
+        !
         {{ headDesc }}
       </p>
       <p class="subheading text-sm-center">{{ desc }}</p>
@@ -19,16 +19,20 @@
     </v-flex>
     <v-flex xs12 mt-5>
       <v-layout column>
-        <v-flex mb-3>
-          <div class="subheading">
-            Information about you.
-          </div>
+        <v-flex v-if="!questions.length && !multiples.length">
+          <v-alert :value="true" outline type="warning" class="subheading">
+            You're too early. The creator of this topic isn't yet providing any
+            question to answer. Come back in a few minutes.
+          </v-alert>
+        </v-flex>
+        <v-flex v-if="questions.length || multiples.length" mb-3>
+          <div class="subheading">Information about you.</div>
           <div v-show="fullname" class="grey--text caption">
             You're logged in, so your identification will be used. If you're not
             the person logged in, then you can log him out and input your names.
           </div>
         </v-flex>
-        <v-flex>
+        <v-flex v-if="questions.length || multiples.length">
           <v-container py-0>
             <v-text-field
               v-model="firstname"
@@ -39,7 +43,7 @@
             ></v-text-field>
           </v-container>
         </v-flex>
-        <v-flex>
+        <v-flex v-if="questions.length || multiples.length">
           <v-container pt-0>
             <v-text-field
               v-model="lastname"
@@ -54,12 +58,12 @@
     </v-flex>
     <v-flex xs12 mt-5>
       <v-layout column>
-        <v-flex v-show="questions.length > 0" mb-3>
+        <v-flex v-if="questions.length > 0" mb-3>
           <div class="subheading">
             Kindly give your opinions for these questions.
           </div>
         </v-flex>
-        <v-flex v-show="questions.length > 0">
+        <v-flex v-if="questions.length > 0">
           <v-layout column wrap>
             <v-flex v-for="q in questions" :key="q.text">
               <QuestionHandler
@@ -71,12 +75,12 @@
             </v-flex>
           </v-layout>
         </v-flex>
-        <v-flex v-show="multiples.length > 0" mt-5>
+        <v-flex v-if="multiples.length > 0" mt-5>
           <div class="subheading">
             Kindly answer these multiple choice questions.
           </div>
         </v-flex>
-        <v-flex v-show="multiples.length > 0">
+        <v-flex v-if="multiples.length > 0">
           <v-layout column wrap>
             <v-flex v-for="q in multiples" :key="q.text">
               <MultipleChoiceHandler
@@ -88,7 +92,7 @@
             </v-flex>
           </v-layout>
         </v-flex>
-        <v-flex>
+        <v-flex v-if="questions.length || multiples.length">
           <div>
             <v-btn
               v-if="formComplete & !respondedAlready"
