@@ -1,5 +1,4 @@
 # needyourhelp-front
-
 > Front-end client for the survey website
 
 ## Build Setup
@@ -20,3 +19,4 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
+
