@@ -15,12 +15,13 @@
         <v-toolbar-title
           style="margin-left: 10px"
           @click="$router.push({ name: 'index' })"
-          ><v-icon v-show="$route.name == 'index'">favorite</v-icon> Need Your
-          Help</v-toolbar-title
         >
+          <v-icon v-show="$route.name == 'index'">favorite</v-icon>Need Your
+          Help
+        </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
-          <v-btn to="/topics" flat> Topics</v-btn>
+          <v-btn to="/topics" flat>Topics</v-btn>
           <v-btn to="/about" flat>About</v-btn>
           <v-btn
             v-show="!userFullName"
@@ -41,6 +42,18 @@
                   <v-icon>exit_to_app</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-title>Logout</v-list-tile-title>
+              </v-list-tile>
+              <v-list-tile @click="logout()">
+                <v-list-tile-action>
+                  <v-icon>edit</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-title>Edit profile</v-list-tile-title>
+              </v-list-tile>
+              <v-list-tile @click="logout()">
+                <v-list-tile-action>
+                  <v-icon>lock</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-title>Change password</v-list-tile-title>
               </v-list-tile>
             </v-list>
           </v-menu>
