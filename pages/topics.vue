@@ -281,7 +281,7 @@ export default {
       if (this.username) {
         await axios
           .post(
-            `https://needyourhelp-api.herokuapp.com/topics/${id}/responded/`,
+            `http://127.0.0.1:8000/topics/${id}/responded/`,
             {
               firstname: this.firstname,
               lastname: this.lastname

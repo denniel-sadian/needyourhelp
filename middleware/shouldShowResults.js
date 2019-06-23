@@ -5,7 +5,7 @@ import axios from 'axios'
 
 export default async function({ store, route, redirect }) {
   const config = {
-    baseURL: 'https://needyourhelp-api.herokuapp.com/'
+    baseURL: 'http://127.0.0.1:8000/'
   }
   if (store.getters.token) {
     config.headers = {

@@ -8,7 +8,7 @@ export default async store => {
     store.commit('SET_EXPIRED', false)
 
     const client = axios.create({
-      baseURL: 'https://needyourhelp-api.herokuapp.com/',
+      baseURL: 'http://127.0.0.1:8000/',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('needyourhelp_access')}`
       }

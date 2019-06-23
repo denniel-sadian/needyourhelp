@@ -208,7 +208,7 @@ export default {
       return this.$store.getters.token
     },
     client() {
-      const config = { baseURL: 'https://needyourhelp-api.herokuapp.com/' }
+      const config = { baseURL: 'http://127.0.0.1:8000/' }
       if (this.token !== '')
         config.headers = {
           Authorization: `Bearer ${this.token}`
@@ -262,7 +262,7 @@ export default {
   },
   async asyncData({ params, store }) {
     const data = {}
-    const root = `https://needyourhelp-api.herokuapp.com/topics/${params.id}/`
+    const root = `http://127.0.0.1:8000/topics/${params.id}/`
     await axios.get(root).then(res => {
       data.title = res.data.title
       data.desc = res.data.description
@@ -296,7 +296,7 @@ export default {
       if ((this.firstname !== '') & (this.lastname !== '')) {
         axios
           .post(
-            `https://needyourhelp-api.herokuapp.com/topics/${
+            `http://127.0.0.1:8000/topics/${
               this.id
             }/responded/`,
             {
@@ -313,7 +313,7 @@ export default {
     async prepareSubmit() {
       this.loading = true
       await axios
-        .post('https://needyourhelp-api.herokuapp.com/create-interviewee/', {
+        .post('http://127.0.0.1:8000/create-interviewee/', {
           first_name: this.firstname,
           last_name: this.lastname
         })
