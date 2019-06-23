@@ -43,7 +43,7 @@
                 </v-list-tile-action>
                 <v-list-tile-title>Logout</v-list-tile-title>
               </v-list-tile>
-              <v-list-tile @click="logout()">
+              <v-list-tile @click="showEdit = !showEdit">
                 <v-list-tile-action>
                   <v-icon>edit</v-icon>
                 </v-list-tile-action>
@@ -111,13 +111,7 @@
               <v-list-tile-title>About</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
-          <v-list-tile
-            v-show="userFullName"
-            @click="
-              logout()
-              showNav = !showNav
-            "
-          >
+          <v-list-tile v-show="userFullName" @click="showEdit = !showEdit">
             <v-list-tile-action>
               <v-icon>edit</v-icon>
             </v-list-tile-action>
@@ -191,6 +185,7 @@
         :show-register="showRegister"
         @register-close="showRegister = false"
       />
+      <EditProfileForm :show-edit="showEdit" @edit-close="showEdit = false" />
       <Footer />
       <v-snackbar
         v-model="expired"
@@ -215,6 +210,7 @@ import getAuth from '~/utils/getAuth.js'
 import Footer from '~/components/Footer.vue'
 import LoginForm from '~/components/LoginForm.vue'
 import RegisterForm from '~/components/RegisterForm.vue'
+import EditProfileForm from '~/components/EditProfileForm.vue'
 
 export default {
   transition: 'layout',
@@ -222,13 +218,15 @@ export default {
   components: {
     Footer,
     LoginForm,
-    RegisterForm
+    RegisterForm,
+    EditProfileForm
   },
   data() {
     return {
       showNav: false,
       showLogin: false,
-      showRegister: false
+      showRegister: false,
+      showEdit: false
     }
   },
   computed: {
