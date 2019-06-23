@@ -6,9 +6,7 @@ import axios from 'axios'
 export default async function({ store, redirect, route }) {
   const username = store.getters.auth.username
   if (username) {
-    const topic = `http://127.0.0.1:8000/topics/${
-      route.params.id
-    }/`
+    const topic = `http://127.0.0.1:8000/topics/${route.params.id}/`
     await axios.get(topic).then(res => {
       if (res.data.owner !== username) redirect('/topics')
     })

@@ -295,15 +295,10 @@ export default {
     checkIfRespondedAlready() {
       if ((this.firstname !== '') & (this.lastname !== '')) {
         axios
-          .post(
-            `http://127.0.0.1:8000/topics/${
-              this.id
-            }/responded/`,
-            {
-              firstname: this.firstname,
-              lastname: this.lastname
-            }
-          )
+          .post(`http://127.0.0.1:8000/topics/${this.id}/responded/`, {
+            firstname: this.firstname,
+            lastname: this.lastname
+          })
           .then(res => {
             if (res.data.responded) this.respondedAlready = true
             else this.respondedAlready = false
