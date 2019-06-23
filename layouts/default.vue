@@ -49,7 +49,7 @@
                 </v-list-tile-action>
                 <v-list-tile-title>Edit profile</v-list-tile-title>
               </v-list-tile>
-              <v-list-tile @click="logout()">
+              <v-list-tile @click="showChangePassword = !showChangePassword">
                 <v-list-tile-action>
                   <v-icon>lock</v-icon>
                 </v-list-tile-action>
@@ -121,10 +121,7 @@
           </v-list-tile>
           <v-list-tile
             v-show="userFullName"
-            @click="
-              logout()
-              showNav = !showNav
-            "
+            @click="showChangePassword = !showChangePassword"
           >
             <v-list-tile-action>
               <v-icon>lock</v-icon>
@@ -186,6 +183,10 @@
         @register-close="showRegister = false"
       />
       <EditProfileForm :show-edit="showEdit" @edit-close="showEdit = false" />
+      <ChangePasswordForm
+        :show-change-password="showChangePassword"
+        @change-password-close="showChangePassword = false"
+      />
       <Footer />
       <v-snackbar
         v-model="expired"
@@ -211,6 +212,7 @@ import Footer from '~/components/Footer.vue'
 import LoginForm from '~/components/LoginForm.vue'
 import RegisterForm from '~/components/RegisterForm.vue'
 import EditProfileForm from '~/components/EditProfileForm.vue'
+import ChangePasswordForm from '~/components/ChangePasswordForm.vue'
 
 export default {
   transition: 'layout',
@@ -219,14 +221,16 @@ export default {
     Footer,
     LoginForm,
     RegisterForm,
-    EditProfileForm
+    EditProfileForm,
+    ChangePasswordForm
   },
   data() {
     return {
       showNav: false,
       showLogin: false,
       showRegister: false,
-      showEdit: false
+      showEdit: false,
+      showChangePassword: false
     }
   },
   computed: {
