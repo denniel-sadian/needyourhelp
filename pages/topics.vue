@@ -3,11 +3,10 @@
     <v-layout row wrap>
       <v-flex xs12>
         <h1 class="title">
-          <v-icon>list</v-icon> There <span v-if="topics.length > 1">are</span
-          ><span v-else>is</span> {{ topics.length }} topic<span
-            v-show="topics.length > 1"
-            >s</span
-          >.
+          <v-icon>list</v-icon>There
+          <span v-if="topics.length > 1">are</span>
+          <span v-else>is</span>
+          {{ topics.length }} topic <span v-show="topics.length > 1">s</span>.
         </h1>
       </v-flex>
       <v-flex xs12 mt-3>
@@ -28,9 +27,10 @@
         ></v-select>
       </v-flex>
       <v-flex xs12 text-xs-right py-2>
-        <v-btn outline block round @click="navigateToCreationPage()"
-          >Create Topic <v-icon right>note_add</v-icon></v-btn
-        >
+        <v-btn outline block round @click="navigateToCreationPage()">
+          Create Topic
+          <v-icon right>note_add</v-icon>
+        </v-btn>
       </v-flex>
       <v-flex v-if="topics.length > 0" xs12 mt-3>
         <template v-for="(topic, index) in pagedTopics">
@@ -49,15 +49,11 @@
                 <div v-if="topic.owner !== username">
                   {{ topic.owner_firstname + ' ' + topic.owner_lastname }}
                 </div>
-                <div v-else>
-                  You
-                </div>
+                <div v-else>You</div>
               </v-flex>
               <v-flex xs6 md2 text-xs-center>
                 <div class="caption grey--text">Date Started</div>
-                <div>
-                  {{ new Date(topic.date_started).toDateString() }}
-                </div>
+                <div>{{ new Date(topic.date_started).toDateString() }}</div>
               </v-flex>
               <v-flex xs3 md1 text-xs-center>
                 <div class="caption grey--text">Status</div>
@@ -75,8 +71,9 @@
                     small
                     :disabled="topic.owner !== username"
                     @click="$router.push(`/edit/${topic.id}/`)"
-                    ><v-icon>edit</v-icon></v-btn
                   >
+                    <v-icon>edit</v-icon>
+                  </v-btn>
                 </div>
               </v-flex>
               <v-flex xs3 md1 text-xs-center>
@@ -88,8 +85,9 @@
                     small
                     :disabled="disableResults(topic)"
                     @click="$router.push(`/results/${topic.id}`)"
-                    ><v-icon>list</v-icon></v-btn
                   >
+                    <v-icon>list</v-icon>
+                  </v-btn>
                 </div>
               </v-flex>
               <v-flex xs2 md1 text-xs-center>
@@ -101,8 +99,9 @@
                     small
                     :disabled="topic.done"
                     @click="respond(topic.id)"
-                    ><v-icon>check_circle</v-icon></v-btn
                   >
+                    <v-icon>check_circle</v-icon>
+                  </v-btn>
                 </div>
               </v-flex>
             </v-layout>
@@ -263,11 +262,11 @@ export default {
       } else this.noUser = true
     },
     disableResults(topic) {
-      if (this.username) {
+      if (topic.done) return false
+      else if (this.username) {
         if (this.username !== topic.owner) return true
         else return false
-      } else if (topic.done) return false
-      else return true
+      } else return true
     },
     goPrevious() {
       // this.$scrollTo('#projects', 0, { force: true })

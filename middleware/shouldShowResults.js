@@ -17,7 +17,7 @@ export default async function({ store, route, redirect }) {
     .get(`topics/${route.params.id}/`)
     .then(res => {
       const topic = res.data
-      if (store.getters.auth.username) {
+      if (store.getters.auth.username & !topic.done) {
         if (store.getters.auth.username !== topic.owner) redirect('/topics')
       } else if (!topic.done) redirect('/topics')
     })
