@@ -118,7 +118,7 @@ export default {
   },
   methods: {
     buildChooseUrl(choiceID) {
-      return `http://127.0.0.1:8000/topics/${
+      return `https://needyourhelp-api.herokuapp.com/topics/${
         this.question.topic
       }/multiplechoices/${this.question.id}/choices/${choiceID}/choose/`
     }
