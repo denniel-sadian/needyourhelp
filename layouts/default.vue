@@ -261,7 +261,7 @@ export default {
 
 <style scoped>
 #nav {
-  background: #4caf50;
+  background: #009688;
 }
 
 #nav * {

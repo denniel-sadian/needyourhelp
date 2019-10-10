@@ -137,8 +137,8 @@ export default {
 
 <style scoped>
 #footer {
-  background: #4caf50;
-  border-top: 5px solid #4caf50;
+  background: #009688;
+  border-top: 5px solid #009688;
 }
 
 #footer * {
@@ -146,6 +146,6 @@ export default {
 }
 
 .green {
-  background: #4caf50 !important;
+  background: #009688 !important;
 }
 </style>

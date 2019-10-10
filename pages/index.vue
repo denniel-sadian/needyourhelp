@@ -117,9 +117,7 @@
           Great! Now you have your account, it's now time to create topics!
           Creating those is just a piece of cake, you just have to head over to
           the
-          <nuxt-link to="/topics" class="subheading yellow--text"
-            >Topics</nuxt-link
-          >
+          <nuxt-link to="/topics">Topics</nuxt-link>
           page. This website lets you build a question sheet that has two kinds
           of questions. One that can be answered by pure opinions of the
           respondents -- good for qualitative research. And the other one that
@@ -221,7 +219,7 @@ export default {
 
 <style scoped>
 #header {
-  background: linear-gradient(#4caf50, white);
+  background: linear-gradient(#009688, white);
   color: white !important;
 }
 button {
