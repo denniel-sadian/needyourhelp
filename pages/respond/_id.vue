@@ -20,7 +20,7 @@
     <v-flex xs12 mt-5>
       <v-layout column>
         <v-flex v-if="!questions.length && !multiples.length">
-          <v-alert :value="true" outline type="warning" class="subheading">
+          <v-alert :value="true" type="warning" class="subheading">
             You're too early. The creator of this topic isn't yet providing any
             question to answer. Come back in a few minutes.
           </v-alert>
