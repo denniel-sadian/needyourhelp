@@ -151,10 +151,15 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-      <div>
-        <p>{{ $store.getters.verifiedQuestions }}</p>
-      </div>
     </v-layout>
+    <div id="form-progress">
+      <v-progress-circular
+        :value="formProgress"
+        size="70"
+        width="10"
+        :color="progressColor"
+      ></v-progress-circular>
+    </div>
   </v-container>
 </template>
 
@@ -238,6 +243,16 @@ export default {
     },
     toSubmit() {
       return this.$store.getters.toSubmit
+    },
+    formProgress() {
+      let answered = this.verifiedQuestions
+      if (this.firstname) answered++
+      if (this.lastname) answered++
+      return (answered * 100) / (this.totalQuestions + 2)
+    },
+    progressColor() {
+      if (this.formProgress === 100) return 'green'
+      return 'pink'
     },
     formComplete() {
       if (
@@ -384,3 +399,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+#form-progress {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+}
+</style>
