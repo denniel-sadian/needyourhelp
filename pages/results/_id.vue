@@ -85,25 +85,25 @@
             <v-flex xs12>
               <template v-for="c in m.choices">
                 <v-card :key="c.counts + Math.random()" flat class="pa-2">
-                  <v-layout row text-sm-center wrap>
-                    <v-flex xs4 md3 order-xs2 order-md1 text-xs-center>
+                  <v-layout row wrap>
+                    <v-flex xs12>
                       <div class="caption grey--text">Choice</div>
                       <div class="subheading">{{ c.choice }}</div>
                     </v-flex>
-                    <v-flex xs12 md3 order-xs1 order-md2>
-                      <div class="caption grey--text">Length</div>
+                    <v-flex xs8>
+                      <div class="caption grey--text">Bar</div>
                       <div class="subheading">
                         <v-progress-linear
-                          color="yellow"
+                          color="green"
                           :value="c.percent"
                         ></v-progress-linear>
                       </div>
                     </v-flex>
-                    <v-flex xs4 md3 order-xs3 text-xs-center>
+                    <v-flex xs2 text-xs-center>
                       <div class="caption grey--text">Percent</div>
                       <div class="subheading">{{ c.percent }}%</div>
                     </v-flex>
-                    <v-flex xs4 md3 order-xs4 text-xs-center>
+                    <v-flex xs2 text-xs-center>
                       <div class="caption grey--text">Counts</div>
                       <div class="subheading">{{ c.counts }}</div>
                     </v-flex>
