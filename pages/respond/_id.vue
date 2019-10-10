@@ -137,7 +137,13 @@
           >
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="pink" flat @click="confirmSubmit = !confirmSubmit"
+            <v-btn
+              color="pink"
+              flat
+              @click="
+                confirmSubmit = !confirmSubmit
+                loading = !loading
+              "
               >Nope</v-btn
             >
             <v-btn
