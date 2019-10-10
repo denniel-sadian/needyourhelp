@@ -354,6 +354,14 @@
                   @keyup.enter="addChoice()"
                 ></v-text-field>
               </v-flex>
+              <v-flex xs12 text-xs-center>
+                <v-btn outline :loading="addingChoice" @click="addChoice()"
+                  >Add</v-btn
+                >
+                <v-btn outline :loading="updatingChoice" @click="editChoice()"
+                  >Update</v-btn
+                >
+              </v-flex>
               <v-flex xs12>
                 <div class="text-xs-center">
                   <v-chip
@@ -365,14 +373,6 @@
                     >{{ c.text }}</v-chip
                   >
                 </div>
-              </v-flex>
-              <v-flex xs12 text-xs-center>
-                <v-btn outline :loading="addingChoice" @click="addChoice()"
-                  >Add</v-btn
-                >
-                <v-btn outline :loading="updatingChoice" @click="editChoice()"
-                  >Update</v-btn
-                >
               </v-flex>
             </v-layout>
           </v-card-text>
@@ -468,6 +468,9 @@
                 ></v-text-field>
               </v-flex>
               <v-flex xs12>
+                <v-btn outline block @click="addRawChoice()">Add Choice</v-btn>
+              </v-flex>
+              <v-flex xs12>
                 <div class="text-xs-center">
                   <v-chip
                     v-for="c in rawChoices"
@@ -477,9 +480,6 @@
                     >{{ c }}</v-chip
                   >
                 </div>
-              </v-flex>
-              <v-flex xs12>
-                <v-btn outline block @click="addRawChoice()">Add Choice</v-btn>
               </v-flex>
             </v-layout>
           </v-card-text>

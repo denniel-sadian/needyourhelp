@@ -137,15 +137,7 @@
           >
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn
-              color="pink"
-              flat
-              @click="
-                confirmSubmit = !confirmSubmit
-                loading = !loading
-              "
-              >Nope</v-btn
-            >
+            <v-btn color="pink" flat @click="cancelSubmission()">Nope</v-btn>
             <v-btn
               color="green"
               flat
@@ -159,6 +151,9 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+      <div>
+        <p>{{ $store.getters.verifiedQuestions }}</p>
+      </div>
     </v-layout>
   </v-container>
 </template>
@@ -311,21 +306,25 @@ export default {
           })
       }
     },
-    async prepareSubmit() {
+    cancelSubmission() {
+      this.confirmSubmit = false
+      this.submit = false
+      this.loading = false
+      this.$store.commit('CLEAR_SUBMITTED_RESPONSE')
+    },
+    prepareSubmit() {
       this.loading = true
-      await axios
-        .post('http://127.0.0.1:8080/create-interviewee/', {
-          first_name: this.firstname,
-          last_name: this.lastname
-        })
-        .catch(() => {})
-        .finally(() => {
-          this.submit = true
-          this.confirmSubmit = true
-        })
+      this.submit = true
+      this.confirmSubmit = true
     },
     async trulySubmit() {
       if (this.preparedQuestions === this.totalQuestions) {
+        await axios
+          .post('http://127.0.0.1:8080/create-interviewee/', {
+            first_name: this.firstname,
+            last_name: this.lastname
+          })
+          .catch(() => {})
         for (const i in this.toSubmit) {
           await axios
             .post(this.toSubmit[i].url, this.toSubmit[i].data)
