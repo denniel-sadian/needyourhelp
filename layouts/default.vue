@@ -1,6 +1,6 @@
 <template>
   <transition name="layout" mode="out-in">
-    <v-app dark app>
+    <v-app app>
       <v-toolbar id="nav" app flat>
         <v-img
           v-show="$route.name != 'index'"
@@ -260,11 +260,11 @@ export default {
 </script>
 
 <style scoped>
-#header,
 #nav {
-  background: url('../assets/images/header.jpg') !important;
-  background-attachment: fixed !important;
-  background-size: cover !important;
-  background-position: center !important;
+  background: #4caf50;
+}
+
+#nav * {
+  color: white !important;
 }
 </style>

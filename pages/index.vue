@@ -25,9 +25,7 @@
           </h1>
         </v-flex>
         <v-flex md12 text-xs-center mt-2>
-          <v-btn large round class="purple" @click="getStarted()"
-            >Get Started</v-btn
-          >
+          <v-btn large round outline @click="getStarted()">Get Started</v-btn>
         </v-flex>
       </v-layout>
       <v-layout
@@ -54,9 +52,7 @@
           </h1>
         </v-flex>
         <v-flex sm12 text-xs-center mt-2>
-          <v-btn large round class="purple" @click="getStarted()"
-            >Get Started</v-btn
-          >
+          <v-btn large round outline @click="getStarted()">Get Started</v-btn>
         </v-flex>
       </v-layout>
       <v-layout column text-xs-center wrap hidden-sm-and-up>
@@ -72,9 +68,7 @@
           <h1 class="display-3 font-weight-black">Need Your Help</h1>
         </v-flex>
         <v-flex text-xs-center mt-2>
-          <v-btn large round class="purple" @click="getStarted()"
-            >Get Started</v-btn
-          >
+          <v-btn large round outline @click="getStarted()">Get Started</v-btn>
         </v-flex>
       </v-layout>
       <v-container grid-list-xs mt-3>
@@ -227,10 +221,11 @@ export default {
 
 <style scoped>
 #header {
-  background: url('../assets/images/header.jpg') !important;
-  background-attachment: fixed !important;
-  background-size: cover !important;
-  background-position: center !important;
+  background: linear-gradient(#4caf50, white);
+  color: white !important;
+}
+button {
+  color: white !important;
 }
 .round {
   border-radius: 10px;

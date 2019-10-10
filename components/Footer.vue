@@ -14,7 +14,7 @@
         </v-container>
       </v-flex>
       <v-flex xs12>
-        <v-container grid-list-xs class="purple darken-4" fluid pa-0>
+        <v-container grid-list-xs class="green darken-4" fluid pa-0>
           <v-container grid-list-xs pa-2>
             <v-layout row wrap align-center pa-2>
               <v-flex xs6 md2 order-xs2 order-md1>
@@ -137,10 +137,15 @@ export default {
 
 <style scoped>
 #footer {
-  background: url('../assets/images/header.jpg') !important;
-  background-attachment: fixed !important;
-  background-size: cover !important;
-  background-position: center !important;
-  border-top: 5px solid #4a148c;
+  background: #4caf50;
+  border-top: 5px solid #4caf50;
+}
+
+#footer * {
+  color: white;
+}
+
+.green {
+  background: #4caf50 !important;
 }
 </style>
