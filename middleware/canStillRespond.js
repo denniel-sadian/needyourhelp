@@ -4,7 +4,7 @@ import axios from 'axios'
 
 export default async function({ route, redirect }) {
   await axios
-    .get(`https://needyourhelp-api.herokuapp.com/topics/${route.params.id}/`)
+    .get(`http://127.0.0.1:8080/topics/${route.params.id}/`)
     .then(res => {
       if (res.data.done) redirect('/topics')
     })

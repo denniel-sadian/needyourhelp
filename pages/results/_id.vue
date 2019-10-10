@@ -152,7 +152,7 @@ export default {
   async asyncData({ params, store }) {
     let data
     const config = {
-      baseURL: 'https://needyourhelp-api.herokuapp.com/'
+      baseURL: 'http://127.0.0.1:8080/'
     }
     if (store.getters.token) {
       config.headers = {

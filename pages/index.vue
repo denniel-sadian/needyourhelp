@@ -226,8 +226,7 @@ export default {
 </script>
 
 <style scoped>
-#header,
-#nav {
+#header {
   background: url('../assets/images/header.jpg') !important;
   background-attachment: fixed !important;
   background-size: cover !important;

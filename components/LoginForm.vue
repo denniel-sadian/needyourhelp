@@ -104,7 +104,7 @@ export default {
     async loginUser() {
       this.loggingIn = true
       await axios
-        .post('https://needyourhelp-api.herokuapp.com/token/', {
+        .post('http://127.0.0.1:8080/token/', {
           username: this.username,
           password: this.password
         })

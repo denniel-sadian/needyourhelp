@@ -279,7 +279,7 @@ export default {
     async respond(id) {
       if (this.username) {
         await axios
-          .post(`https://needyourhelp-api.herokuapp.com/topics/${id}/responded/`, {
+          .post(`http://127.0.0.1:8080/topics/${id}/responded/`, {
             firstname: this.firstname,
             lastname: this.lastname
           })

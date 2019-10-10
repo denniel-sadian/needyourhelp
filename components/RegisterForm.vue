@@ -201,7 +201,7 @@ export default {
         if (!this.username.includes(' ')) {
           if (this.password === this.passwordAgain) {
             await axios
-              .post('https://needyourhelp-api.herokuapp.com/auth/register/', {
+              .post('http://127.0.0.1:8080/auth/register/', {
                 username: this.username,
                 first_name: this.firstName,
                 last_name: this.lastName,
@@ -210,7 +210,7 @@ export default {
               })
               .then(async res => {
                 await axios
-                  .post('https://needyourhelp-api.herokuapp.com/token/', {
+                  .post('http://127.0.0.1:8080/token/', {
                     username: this.username,
                     password: this.password
                   })
