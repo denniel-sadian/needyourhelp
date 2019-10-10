@@ -117,11 +117,16 @@
             <template v-for="q in multiples_">
               <v-card :key="q.text" flat class="pa-3">
                 <v-layout row wrap>
-                  <v-flex xs12 sm3>
+                  <v-flex xs10>
                     <div class="caption grey--text">Question</div>
                     <div class="subheading">{{ q.text }}</div>
                   </v-flex>
-                  <v-flex xs12 sm3 text-sm-center>
+                  <v-flex xs2 text-xs-left text-sm-center>
+                    <div class="caption grey--text">Choose all</div>
+                    <div v-if="q.multiple" class="subheading">Yes</div>
+                    <div v-else class="subheading">No</div>
+                  </v-flex>
+                  <v-flex xs12>
                     <div class="caption grey--text">Choices</div>
                     <div>
                       <v-chip
@@ -131,12 +136,7 @@
                       >
                     </div>
                   </v-flex>
-                  <v-flex xs8 sm2 text-xs-left text-sm-center>
-                    <div class="caption grey--text">Choose all</div>
-                    <div v-if="q.multiple" class="subheading">Yes</div>
-                    <div v-else class="subheading">No</div>
-                  </v-flex>
-                  <v-flex xs2 sm2 text-xs-center>
+                  <v-flex xs6 text-xs-center>
                     <div class="caption grey--text">Delete</div>
                     <div>
                       <v-btn
@@ -151,7 +151,7 @@
                       >
                     </div>
                   </v-flex>
-                  <v-flex xs2 sm2 text-xs-center>
+                  <v-flex xs6 text-xs-center>
                     <div class="caption grey--text">Edit</div>
                     <div>
                       <v-btn fab flat small @click="prepareMultipleChoice(q)"
@@ -963,3 +963,11 @@ export default {
   }
 }
 </script>
+
+<style>
+.v-chip__content {
+  white-space: unset !important;
+  height: unset !important;
+  min-height: 32px !important;
+}
+</style>
