@@ -86,7 +86,7 @@
               <template v-for="c in m.choices">
                 <v-card :key="c.counts + Math.random()" flat class="pa-2">
                   <v-layout row wrap>
-                    <v-flex xs12>
+                    <v-flex xs12 mb-2>
                       <div class="caption grey--text">Choice</div>
                       <div class="title">{{ c.choice }}</div>
                     </v-flex>
