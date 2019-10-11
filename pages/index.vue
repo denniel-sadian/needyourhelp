@@ -101,8 +101,8 @@
     <v-container grid-list-xs mb-5>
       <div class="text-xs-center display-1">How to use?</div>
       <v-layout row align-center justify-center wrap text-xs-center pt-5>
-        <v-flex xs12 sm4 display-4>1<sup class="grey--text">st</sup> </v-flex>
-        <v-flex xs12 sm8 headline text-md-left>
+        <v-flex xs12 sm4 display-3>1<sup class="grey--text">st</sup> </v-flex>
+        <v-flex xs12 sm8 subheading text-md-left>
           If you have a topic that you wish to conduct a survey with. You can
           build it here. First, you create your account, and all the topics you
           create will reference to you. Building your account is very easy, try
@@ -110,10 +110,10 @@
         </v-flex>
       </v-layout>
       <v-layout row align-center justify-center wrap text-xs-center pt-5>
-        <v-flex xs12 sm4 order-sm2 display-4
+        <v-flex xs12 sm4 order-sm2 display-3
           >2<sup class="grey--text">nd</sup>
         </v-flex>
-        <v-flex xs12 sm8 headline text-md-right>
+        <v-flex xs12 sm8 subheading text-md-right>
           Great! Now you have your account, it's now time to create topics!
           Creating those is just a piece of cake, you just have to head over to
           the
@@ -125,8 +125,8 @@
         </v-flex>
       </v-layout>
       <v-layout row align-center justify-center wrap text-xs-center pt-5>
-        <v-flex xs12 sm4 display-4>3<sup class="grey--text">rd</sup> </v-flex>
-        <v-flex xs12 sm8 headline text-md-left>
+        <v-flex xs12 sm4 display-3>3<sup class="grey--text">rd</sup> </v-flex>
+        <v-flex xs12 sm8 subheading text-md-left>
           Now, you're done with the creation of your topic. You can now share
           the link of your subject to your respondents. Sharing the link to
           social platforms you like will do very well as well. The results of

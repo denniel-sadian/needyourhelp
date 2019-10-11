@@ -18,7 +18,7 @@
         </div>
       </v-flex>
       <v-flex md8>
-        <p class="headline">
+        <p class="subheading">
           This website is an art of
           <a href="https://sadian.herokuapp.com/portfolio/about"
             >Denniel Luis Saway Sadian</a
