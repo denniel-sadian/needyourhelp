@@ -308,7 +308,7 @@ export default {
       data.firstname = route.query.fname
       data.lastname = route.query.lname
     }
-    if ((data.firstname !== '') & (data.lastname !== '')) {
+    if (data.firstname !== '' && data.lastname !== '') {
       data.respondedAlready = await hasRespondedAlready(
         data.id,
         data.firstname,
@@ -321,7 +321,7 @@ export default {
   },
   methods: {
     async checkIfRespondedAlready() {
-      if ((this.firstname !== '') & (this.lastname !== '')) {
+      if (this.firstname !== '' && this.lastname !== '') {
         this.respondedAlready = await hasRespondedAlready(
           this.id,
           this.firstname,
