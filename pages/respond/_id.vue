@@ -65,7 +65,7 @@
         </v-flex>
         <v-flex v-if="questions.length > 0">
           <v-layout column wrap>
-            <v-flex v-for="q in questions" :key="q.text">
+            <v-flex v-for="q in questions" :key="q.text" class="question">
               <QuestionHandler
                 :question="q"
                 :firstname="firstname"
@@ -82,7 +82,7 @@
         </v-flex>
         <v-flex v-if="multiples.length > 0">
           <v-layout column wrap>
-            <v-flex v-for="q in multiples" :key="q.text">
+            <v-flex v-for="q in multiples" :key="q.text" class="question">
               <MultipleChoiceHandler
                 :question="q"
                 :firstname="firstname"
@@ -409,6 +409,12 @@ export default {
 </script>
 
 <style scoped>
+.question {
+  border: 2px solid teal;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
 #form-progress {
   position: fixed;
   top: 100px;
