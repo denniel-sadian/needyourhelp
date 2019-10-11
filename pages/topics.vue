@@ -6,7 +6,7 @@
           <v-icon>list</v-icon>There
           <span v-if="topics.length > 1">are</span>
           <span v-else>is</span>
-          {{ topics.length }} topic <span v-show="topics.length > 1">s</span>.
+          {{ topics.length }} topic<span v-show="topics.length > 1">s</span>.
         </h1>
       </v-flex>
       <v-flex xs12 mt-3>
