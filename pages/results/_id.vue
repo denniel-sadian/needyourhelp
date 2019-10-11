@@ -88,13 +88,13 @@
                   <v-layout row wrap>
                     <v-flex xs12>
                       <div class="caption grey--text">Choice</div>
-                      <div class="subheading">{{ c.choice }}</div>
+                      <div class="title">{{ c.choice }}</div>
                     </v-flex>
                     <v-flex xs8>
                       <div class="caption grey--text">Bar</div>
                       <div class="subheading">
                         <v-progress-linear
-                          color="green"
+                          color="teal"
                           :value="c.percent"
                         ></v-progress-linear>
                       </div>
