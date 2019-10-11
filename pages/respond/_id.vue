@@ -310,6 +310,7 @@ export default {
     }
     if ((data.firstname !== '') & (data.lastname !== '')) {
       data.respondedAlready = await hasRespondedAlready(
+        data.id,
         data.firstname,
         data.lastname
       )
@@ -322,6 +323,7 @@ export default {
     async checkIfRespondedAlready() {
       if ((this.firstname !== '') & (this.lastname !== '')) {
         this.respondedAlready = await hasRespondedAlready(
+          this.id,
           this.firstname,
           this.lastname
         )

@@ -2,10 +2,10 @@
 
 import axios from 'axios'
 
-export default async (fname, lname) => {
+export default async (id, fname, lname) => {
   let respondedAlready = false
   await axios
-    .post(`http://127.0.0.1:8080/topics/${this.id}/responded/`, {
+    .post(`http://127.0.0.1:8080/topics/${id}/responded/`, {
       firstname: fname,
       lastname: lname
     })
