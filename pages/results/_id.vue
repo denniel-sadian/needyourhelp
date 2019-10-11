@@ -51,7 +51,7 @@
                 <v-card
                   :key="a.respondent + a.answer"
                   flat
-                  class="pa-2 light-purple mb-3"
+                  class="pa-2 light-gray mb-3"
                 >
                   <v-layout row text-sm-center wrap>
                     <v-flex xs12 sm6>
@@ -90,7 +90,7 @@
                 <v-card
                   :key="c.counts + Math.random()"
                   flat
-                  class="pa-2 mb-3 light-purple"
+                  class="pa-2 mb-3 light-gray"
                 >
                   <v-layout row wrap>
                     <v-flex xs12 mb-2>
@@ -227,7 +227,7 @@ export default {
   margin-bottom: 15px;
   border-radius: 10px;
 }
-.light-purple {
+.light-gray {
   background: rgb(237, 237, 255);
   border: 2px solid gray;
   border-radius: 10px;

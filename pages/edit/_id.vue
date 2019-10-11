@@ -57,7 +57,7 @@
               Opinion-answered questions
             </div>
             <template v-for="q in questions_">
-              <v-card :key="q.text" flat class="pa-3 light-purple mb-3">
+              <v-card :key="q.text" flat class="pa-3 light-gray mb-3">
                 <v-layout row>
                   <v-flex xs8>
                     <div class="caption grey--text">Question</div>
@@ -114,7 +114,7 @@
               Multiple choice questions
             </div>
             <template v-for="q in multiples_">
-              <v-card :key="q.text" flat class="pa-3 mb-3 light-purple">
+              <v-card :key="q.text" flat class="pa-3 mb-3 light-gray">
                 <v-layout row wrap>
                   <v-flex xs10>
                     <div class="caption grey--text">Question</div>
@@ -971,7 +971,7 @@ export default {
 </style>
 
 <style scoped>
-.light-purple {
+.light-gray {
   background: rgb(237, 237, 255);
   border: 2px solid teal;
   border-radius: 10px;

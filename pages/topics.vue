@@ -34,7 +34,7 @@
       </v-flex>
       <v-flex v-if="topics.length > 0" xs12 mt-3>
         <template v-for="topic in pagedTopics">
-          <v-card :key="topic.title" flat class="pa-3 mb-3 light-purple">
+          <v-card :key="topic.title" flat class="pa-3 mb-3 light-gray">
             <v-layout row wrap>
               <v-flex xs12 md3>
                 <div class="caption grey--text">Topic Title</div>
@@ -309,7 +309,7 @@ export default {
 </script>
 
 <style scoped>
-.light-purple {
+.light-gray {
   background: rgb(237, 237, 255);
 }
 </style>
