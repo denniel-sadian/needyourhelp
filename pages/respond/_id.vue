@@ -276,7 +276,7 @@ export default {
         setTimeout(() => this.$router.push('/respond/thankyou'), 1000)
     }
   },
-  async asyncData({ params, store }) {
+  async asyncData({ params, store, route }) {
     const data = {}
     const root = `http://127.0.0.1:8080/topics/${params.id}/`
     await axios.get(root).then(res => {
@@ -302,6 +302,9 @@ export default {
     if (store.getters.auth.username) {
       data.firstname = store.getters.auth.first_name
       data.lastname = store.getters.auth.last_name
+    } else if (route.query.fname && route.query.lname) {
+      data.firstname = route.query.fname
+      data.lastname = route.query.lname
     }
     store.commit('CLEAR_VERIFIED_QUESTIONS')
     store.commit('CLEAR_SUBMITTED_RESPONSE')
