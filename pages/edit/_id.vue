@@ -53,7 +53,7 @@
       <v-flex xs12>
         <v-layout row wrap>
           <v-flex xs12 md6 pa-1 mt-4>
-            <div class="subheading text-xs-center">
+            <div class="headline text-xs-center mb-3">
               Opinion-answered questions
             </div>
             <template v-for="q in questions_">
@@ -61,7 +61,7 @@
                 <v-layout row>
                   <v-flex xs8>
                     <div class="caption grey--text">Question</div>
-                    <div class="subheading">{{ q.text }}</div>
+                    <div class="title">{{ q.text }}</div>
                   </v-flex>
                   <v-flex xs2 text-xs-center>
                     <div class="caption grey--text">Delete</div>
@@ -110,7 +110,7 @@
             </div>
           </v-flex>
           <v-flex xs12 md6 pa-1 mt-4>
-            <div class="subheading text-xs-center">
+            <div class="headline text-xs-center mb-3">
               Multiple choice questions
             </div>
             <template v-for="q in multiples_">
@@ -118,7 +118,7 @@
                 <v-layout row wrap>
                   <v-flex xs10>
                     <div class="caption grey--text">Question</div>
-                    <div class="subheading">{{ q.text }}</div>
+                    <div class="title">{{ q.text }}</div>
                   </v-flex>
                   <v-flex xs2 text-xs-center>
                     <div class="caption grey--text">Choose all</div>

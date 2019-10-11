@@ -44,7 +44,7 @@
       </v-flex>
       <v-flex v-for="q in questions" :key="q.question" xs12>
         <v-container grid-list-xs class="question">
-          <div class="subheading">{{ q.question }}</div>
+          <div class="headline">{{ q.question }}</div>
           <v-layout row>
             <v-flex xs12>
               <template v-for="a in q.answers">
@@ -76,7 +76,7 @@
       </v-flex>
       <v-flex v-for="m in multiple_choice_questions" :key="m.question" xs12>
         <v-container grid-list-xs class="question">
-          <div class="subheading">{{ m.question }}</div>
+          <div class="headline">{{ m.question }}</div>
           <div v-show="m.choose_all" class="caption">
             The respondents were asked to choose all that applies, so some
             choices might have same percents.
