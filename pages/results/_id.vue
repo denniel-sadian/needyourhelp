@@ -43,7 +43,7 @@
         <h1 class="title"><v-icon>list</v-icon> Opinions to the questions</h1>
       </v-flex>
       <v-flex v-for="q in questions" :key="q.question" xs12>
-        <v-container grid-list-xs>
+        <v-container grid-list-xs class="question">
           <div class="subheading">{{ q.question }}</div>
           <v-layout row>
             <v-flex xs12>
@@ -75,7 +75,7 @@
         <h1 class="title"><v-icon>list</v-icon> Multiple choices</h1>
       </v-flex>
       <v-flex v-for="m in multiple_choice_questions" :key="m.question" xs12>
-        <v-container grid-list-xs>
+        <v-container grid-list-xs class="question">
           <div class="subheading">{{ m.question }}</div>
           <div v-show="m.choose_all" class="caption">
             The respondents were asked to choose all that applies, so some
@@ -218,3 +218,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.question {
+  border: 2px solid gray;
+  margin-bottom: 15px;
+  border-radius: 10px;
+}
+</style>

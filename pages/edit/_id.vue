@@ -57,7 +57,7 @@
               Opinion-answered questions
             </div>
             <template v-for="q in questions_">
-              <v-card :key="q.text" flat class="pa-3">
+              <v-card :key="q.text" flat class="pa-3 light-purple mb-3">
                 <v-layout row>
                   <v-flex xs8>
                     <div class="caption grey--text">Question</div>
@@ -96,7 +96,6 @@
                   </v-flex>
                 </v-layout>
               </v-card>
-              <v-divider :key="q.id + ' question'"></v-divider>
             </template>
             <div class="text-xs-center">
               <v-btn
@@ -115,13 +114,13 @@
               Multiple choice questions
             </div>
             <template v-for="q in multiples_">
-              <v-card :key="q.text" flat class="pa-3">
+              <v-card :key="q.text" flat class="pa-3 mb-3 light-purple">
                 <v-layout row wrap>
                   <v-flex xs10>
                     <div class="caption grey--text">Question</div>
                     <div class="subheading">{{ q.text }}</div>
                   </v-flex>
-                  <v-flex xs2 text-xs-left text-sm-center>
+                  <v-flex xs2 text-xs-center>
                     <div class="caption grey--text">Choose all</div>
                     <div v-if="q.multiple" class="subheading">Yes</div>
                     <div v-else class="subheading">No</div>
@@ -161,7 +160,6 @@
                   </v-flex>
                 </v-layout>
               </v-card>
-              <v-divider :key="q.id + ' question'"></v-divider>
             </template>
             <div class="text-xs-center">
               <v-btn
@@ -969,5 +967,13 @@ export default {
   white-space: unset !important;
   height: unset !important;
   min-height: 32px !important;
+}
+</style>
+
+<style scoped>
+.light-purple {
+  background: rgb(237, 237, 255);
+  border: 2px solid teal;
+  border-radius: 10px;
 }
 </style>

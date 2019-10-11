@@ -33,12 +33,12 @@
         </v-btn>
       </v-flex>
       <v-flex v-if="topics.length > 0" xs12 mt-3>
-        <template v-for="(topic, index) in pagedTopics">
-          <v-card :key="topic.title" flat class="pa-3">
+        <template v-for="topic in pagedTopics">
+          <v-card :key="topic.title" flat class="pa-3 mb-3 light-purple">
             <v-layout row wrap>
               <v-flex xs12 md3>
                 <div class="caption grey--text">Topic Title</div>
-                <div class="subheading">{{ topic.title }}</div>
+                <div class="headline">{{ topic.title }}</div>
               </v-flex>
               <v-flex xs12 md2>
                 <div class="caption grey--text">Description</div>
@@ -106,7 +106,6 @@
               </v-flex>
             </v-layout>
           </v-card>
-          <v-divider :key="index"></v-divider>
         </template>
       </v-flex>
       <v-flex v-else xs12 text-xs-center mt-5>
@@ -314,3 +313,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.light-purple {
+  background: rgb(237, 237, 255);
+}
+</style>
