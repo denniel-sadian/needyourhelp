@@ -166,6 +166,8 @@
 <script>
 import axios from 'axios'
 
+import hasRespondedAlready from '~/utils/hasRespondedAlready.js'
+
 import QuestionHandler from '~/components/QuestionHandler.vue'
 import MultipleChoiceHandler from '~/components/MultipleChoiceHandler.vue'
 
@@ -306,22 +308,23 @@ export default {
       data.firstname = route.query.fname
       data.lastname = route.query.lname
     }
+    if ((data.firstname !== '') & (data.lastname !== '')) {
+      data.respondedAlready = await hasRespondedAlready(
+        data.firstname,
+        data.lastname
+      )
+    }
     store.commit('CLEAR_VERIFIED_QUESTIONS')
     store.commit('CLEAR_SUBMITTED_RESPONSE')
     return data
   },
   methods: {
-    checkIfRespondedAlready() {
+    async checkIfRespondedAlready() {
       if ((this.firstname !== '') & (this.lastname !== '')) {
-        axios
-          .post(`http://127.0.0.1:8080/topics/${this.id}/responded/`, {
-            firstname: this.firstname,
-            lastname: this.lastname
-          })
-          .then(res => {
-            if (res.data.responded) this.respondedAlready = true
-            else this.respondedAlready = false
-          })
+        this.respondedAlready = await hasRespondedAlready(
+          this.firstname,
+          this.lastname
+        )
       }
     },
     cancelSubmission() {
