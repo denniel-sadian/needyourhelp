@@ -47,7 +47,7 @@
           <div class="headline">{{ q.question }}</div>
           <v-layout row>
             <v-flex xs12>
-              <template v-for="a in q.answers">
+              <template v-for="(a, i) in q.answers">
                 <v-card :key="a.respondent + a.answer" flat class="pa-2">
                   <v-layout row text-sm-center wrap>
                     <v-flex xs12 sm6>
@@ -62,7 +62,10 @@
                     </v-flex>
                   </v-layout>
                 </v-card>
-                <v-divider :key="a.answer + a.respondent"></v-divider>
+                <v-divider
+                  v-show="i + 1 !== q.answers.length"
+                  :key="a.answer + a.respondent"
+                ></v-divider>
               </template>
             </v-flex>
           </v-layout>
@@ -83,7 +86,7 @@
           </div>
           <v-layout row>
             <v-flex xs12>
-              <template v-for="c in m.choices">
+              <template v-for="(c, i) in m.choices">
                 <v-card :key="c.counts + Math.random()" flat class="pa-2">
                   <v-layout row wrap>
                     <v-flex xs12 mb-2>
@@ -109,7 +112,10 @@
                     </v-flex>
                   </v-layout>
                 </v-card>
-                <v-divider :key="c.choice + c.counts.toString()"></v-divider>
+                <v-divider
+                  v-show="i + 1 !== m.choices.length"
+                  :key="c.choice + c.counts.toString()"
+                ></v-divider>
               </template>
             </v-flex>
           </v-layout>
