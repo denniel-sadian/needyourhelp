@@ -417,7 +417,7 @@ export default {
 
 #form-progress {
   position: fixed;
-  top: 100px;
+  bottom: 20px;
   right: 20px;
 }
 </style>
