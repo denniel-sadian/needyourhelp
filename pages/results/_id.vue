@@ -47,8 +47,12 @@
           <div class="headline">{{ q.question }}</div>
           <v-layout row>
             <v-flex xs12>
-              <template v-for="(a, i) in q.answers">
-                <v-card :key="a.respondent + a.answer" flat class="pa-2">
+              <template v-for="a in q.answers">
+                <v-card
+                  :key="a.respondent + a.answer"
+                  flat
+                  class="pa-2 light-purple mb-3"
+                >
                   <v-layout row text-sm-center wrap>
                     <v-flex xs12 sm6>
                       <div class="caption grey--text">Respondent</div>
@@ -62,10 +66,6 @@
                     </v-flex>
                   </v-layout>
                 </v-card>
-                <v-divider
-                  v-show="i + 1 !== q.answers.length"
-                  :key="a.answer + a.respondent"
-                ></v-divider>
               </template>
             </v-flex>
           </v-layout>
@@ -86,8 +86,12 @@
           </div>
           <v-layout row>
             <v-flex xs12>
-              <template v-for="(c, i) in m.choices">
-                <v-card :key="c.counts + Math.random()" flat class="pa-2">
+              <template v-for="c in m.choices">
+                <v-card
+                  :key="c.counts + Math.random()"
+                  flat
+                  class="pa-2 mb-3 light-purple"
+                >
                   <v-layout row wrap>
                     <v-flex xs12 mb-2>
                       <div class="caption grey--text">Choice</div>
@@ -112,20 +116,12 @@
                     </v-flex>
                   </v-layout>
                 </v-card>
-                <v-divider
-                  v-show="i + 1 !== m.choices.length"
-                  :key="c.choice + c.counts.toString()"
-                ></v-divider>
               </template>
             </v-flex>
           </v-layout>
         </v-container>
       </v-flex>
     </v-layout>
-
-    <!---
-    
-    --->
   </v-container>
 </template>
 
@@ -229,6 +225,11 @@ export default {
 .question {
   border: 2px solid gray;
   margin-bottom: 15px;
+  border-radius: 10px;
+}
+.light-purple {
+  background: rgb(237, 237, 255);
+  border: 2px solid gray;
   border-radius: 10px;
 }
 </style>
