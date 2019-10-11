@@ -157,7 +157,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import hasRespondedAlready from '~/utils/hasRespondedAlready.js'
 
 export default {
   watchQuery: ['page'],
@@ -277,15 +277,9 @@ export default {
     },
     async respond(id) {
       if (this.username) {
-        await axios
-          .post(`http://127.0.0.1:8080/topics/${id}/responded/`, {
-            firstname: this.firstname,
-            lastname: this.lastname
-          })
-          .then(res => {
-            if (res.data.responded) this.respondedAlready = true
-            else this.$router.push(`/respond/${id}/`)
-          })
+        if (await hasRespondedAlready(id, this.firstname, this.lastname))
+          this.respondedAlready = true
+        else this.$router.push(`/respond/${id}/`)
       } else this.$router.push(`/respond/${id}/`)
     }
   },
