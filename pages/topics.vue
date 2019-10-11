@@ -36,33 +36,33 @@
         <template v-for="topic in pagedTopics">
           <v-card :key="topic.title" flat class="pa-3 mb-3 light-gray">
             <v-layout row wrap>
-              <v-flex xs12 md3>
+              <v-flex xs12>
                 <div class="caption grey--text">Topic Title</div>
                 <div class="headline">{{ topic.title }}</div>
               </v-flex>
-              <v-flex xs12 md2>
+              <v-flex xs12>
                 <div class="caption grey--text">Description</div>
-                <div>{{ topic.description.slice(0, 100) + '...' }}</div>
+                <div>{{ topic.description.slice(0, 200) + '...' }}</div>
               </v-flex>
-              <v-flex xs6 md1>
+              <v-flex xs12>
                 <div class="caption grey--text">Topic Owner</div>
                 <div v-if="topic.owner !== username">
                   {{ topic.owner_firstname + ' ' + topic.owner_lastname }}
                 </div>
                 <div v-else>You</div>
               </v-flex>
-              <v-flex xs6 md2 text-xs-center>
+              <v-flex xs12>
                 <div class="caption grey--text">Date Started</div>
                 <div>{{ new Date(topic.date_started).toDateString() }}</div>
               </v-flex>
-              <v-flex xs3 md1 text-xs-center>
+              <v-flex xs12>
                 <div class="caption grey--text">Status</div>
                 <div>
                   <v-chip v-if="topic.done" small class="green">Done</v-chip>
                   <v-chip v-else small class="orange">On going</v-chip>
                 </div>
               </v-flex>
-              <v-flex xs3 md1 text-xs-center>
+              <v-flex xs4 text-xs-center>
                 <div class="caption grey--text">Edit</div>
                 <div>
                   <v-btn
@@ -76,7 +76,7 @@
                   </v-btn>
                 </div>
               </v-flex>
-              <v-flex xs3 md1 text-xs-center>
+              <v-flex xs4 text-xs-center>
                 <div class="caption grey--text">Results</div>
                 <div>
                   <v-btn
@@ -90,7 +90,7 @@
                   </v-btn>
                 </div>
               </v-flex>
-              <v-flex xs2 md1 text-xs-center>
+              <v-flex xs4 text-xs-center>
                 <div class="caption grey--text">Respond</div>
                 <div>
                   <v-btn
@@ -311,5 +311,7 @@ export default {
 <style scoped>
 .light-gray {
   background: rgb(237, 237, 255);
+  border: 2px solid gray;
+  border-radius: 10px;
 }
 </style>
