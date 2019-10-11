@@ -1,8 +1,10 @@
 <template>
-  <v-container pt-5>
+  <v-container id="main" pt-5>
     <v-layout row wrap>
       <v-flex d-flex xs12>
-        <div class="title">Create Topic</div>
+        <div class="display-2 text-xs-center font-weight-black">
+          Create Topic
+        </div>
       </v-flex>
       <v-flex d-flex xs12 pt-5>
         <v-text-field
@@ -179,3 +181,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+#main {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+</style>
