@@ -186,7 +186,7 @@ export default {
   methods: {
     getStarted() {
       if (this.$store.getters.auth.username) {
-        this.$router.push('topics')
+        this.$router.push('create')
       } else {
         this.getSartedSnack = true
       }
