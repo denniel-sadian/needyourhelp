@@ -2,7 +2,9 @@
   <v-container grid-list-xs mt-5>
     <v-layout row wrap>
       <v-flex xs12>
-        <div class="title pb-3">Edit topic</div>
+        <div class="display-2 text-xs-center font-weight-black pb-3">
+          Edit topic
+        </div>
         <v-alert :value="true" type="info" class="subheading">
           If this is your first time editing this topic, then you're fine to go.
           If not, then be sure that you haven't yet started the promotion of
