@@ -6,7 +6,7 @@ export default async (id, fname, lname) => {
   let respondedAlready = false
   if (fname && lname) {
     await axios
-      .post(`http://127.0.0.1:8080/topics/${id}/responded/`, {
+      .post(`https://needyourhelp-api.herokuapp.com/topics/${id}/responded/`, {
         firstname: fname,
         lastname: lname
       })

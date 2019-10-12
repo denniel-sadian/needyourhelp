@@ -572,7 +572,7 @@ export default {
     },
     client() {
       const client = axios.create({
-        baseURL: 'http://127.0.0.1:8080/',
+        baseURL: 'https://needyourhelp-api.herokuapp.com/',
         headers: {
           Authorization: `Bearer ${this.token}`
         }
@@ -596,7 +596,7 @@ export default {
     }
   },
   async asyncData({ params }) {
-    const root = `http://127.0.0.1:8080/topics/${params.id}/`
+    const root = `https://needyourhelp-api.herokuapp.com/topics/${params.id}/`
     const data = {}
     await axios
       .get(root)
